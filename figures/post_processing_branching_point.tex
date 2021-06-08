@@ -1,0 +1,110 @@
+\begin{tikzpicture}[thick, scale=.5]
+
+	\def\colors{{
+		"048 137 201", % 1 adjacency points
+		"048 137 201", % 2 adjacency points
+		"219 103 020"  % 3 adjacency points
+	}}
+
+	% index x
+	\def\posx{{
+		0,
+		   1,                   8,
+		   1,    3, 4,    6, 7,
+		      2,       5,       8,
+		         3,    5,
+		         3,       6, 7,
+		      2,          6,    8,
+		   1,    3,       6,
+		   1,       4,       7
+	}}
+
+	% index y
+	\def\posy{{
+		9,
+		   8,                   8,
+		   7,    7, 7,    7, 7,
+		      6,       6,       6,
+		         5,    5,
+		         4,       4, 4,
+		      3,          3,    3,
+		   2,    2,       2,
+		   1,       1,       1
+	}}
+
+	% the number of adjacency points
+	\def\neighbors{{
+		1,
+		   2,                   1,
+		   2,    2, 2,    2, 3,
+		      3,       3,       1,
+		         2,    2,
+		         2,       3, 2,
+		      3,          2,    1,
+		   2,    2,       2,
+		   2,       2,       2
+	}}
+
+	% \drawsquare#x#y#size#label#fillcolor#drawcolor
+	\def\drawsquare#1#2#3#4#5#6{
+		\filldraw[fill=#5, draw=#6] (#1, #2) rectangle (#1 + #3, #2 + #3) node[pos=.5] {\textcolor{white}{#4}};
+	}
+
+	% grid
+	\draw[very thin, color=gray] (0, 0) grid (10, 10);
+
+	% pixel
+	\foreach \i in {0, ..., 24} {
+		\def\neighbor{\neighbors[\i]}
+		\pgfmathparse{\colors[\neighbor - 1]};
+		\definecolor{color}{RGB}{\pgfmathresult};
+		\drawsquare{\posx[\i]}{\posy[\i]}{1}{\pgfmathparse{\neighbor}\pgfmathresult}{color}{none}
+	}
+
+	% frame
+	\drawsquare{0}{0}{10}{}{none}{black}
+\end{tikzpicture}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bellow is old version
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\begin{tikzpicture}[thick, scale=.8]
+%	\def\colors{{
+%		"000 000 000", % black
+%		"255 255 255", % white
+%		"255 255 255", % white
+%		"255 000 000"  % red
+%	}}
+%
+%	% \drawsquare#x#y#size#label#color
+%	\def\drawsquare#1#2#3#4#5{
+%		\filldraw[fill=#5] (#1, #2) rectangle (#1 + #3, #2 + #3) node[pos=.5] {#4};
+%	}
+%	
+%	% vessel
+%	\def\neighbors{{
+%		1, 0, 0, 0, 0, 0, 0, 0, 0,
+%		0, 2, 0, 0, 0, 0, 0, 0, 1,
+%		0, 2, 0, 2, 2, 0, 2, 3, 0,
+%		0, 0, 3, 0, 0, 3, 0, 0, 1,
+%		0, 0, 0, 2, 0, 2, 0, 0, 0,
+%		0, 0, 0, 2, 0, 0, 3, 2, 0,
+%		0, 0, 3, 0, 0, 0, 2, 0, 1,
+%		0, 2, 0, 2, 0, 0, 2, 0, 0,
+%		0, 2, 0, 0, 2, 0, 0, 2, 0
+%	}}
+%	
+%	% board
+%	\drawsquare{0}{0}{10}{0}{black}
+%	
+%	% pixel
+%	\foreach \y in {0, ..., 8} {
+%		\foreach \x in {0, ..., 8} {
+%			\def\neighbor{\neighbors[9 * \y + \x]}
+%			\pgfmathparse{\colors[\neighbor]};
+%			\definecolor{color}{RGB}{\pgfmathresult};
+%			\drawsquare{\x}{9 - \y}{1}{\pgfmathparse{\neighbor}\pgfmathresult}{color}
+%		}
+%	}
+%\end{tikzpicture}

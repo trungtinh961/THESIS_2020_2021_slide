@@ -1,0 +1,332 @@
+% The outer BKU sidebar theme is derived from the outer sidebar theme which has the following
+% copyright notice:
+% Copyright 2007 by Till Tantau
+% <end of copyright notice>
+%
+% All the changes are (c) 2017 by Nguyen Van Hung <nvhung1401@gmail.com>.
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerouterthemeBKUsidebar}[2017/06/01 v1.0.0 The BKU Sidebar Beamer Theme]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load required packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{tikz}
+\RequirePackage{calc}
+
+% end of load required packages
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theme options and definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% theme options
+\DeclareOptionBeamer{left}{\def\beamer@sidebarside{left}}
+\DeclareOptionBeamer{right}{\def\beamer@sidebarside{right}}
+\DeclareOptionBeamer{width}{\def\beamer@width{#1}}
+\DeclareOptionBeamer{hidetitle}{\def\beamer@hidetitle{true}}
+\DeclareOptionBeamer{hideauthor}{\def\beamer@hideauthor{true}}
+\DeclareOptionBeamer{hideothersubsections}[]{\beamer@nav@subsectionstyle{show/show/hide}}
+\DeclareOptionBeamer{hideallsubsections}[]{\beamer@nav@subsectionstyle{hide}}
+\DeclareOptionBeamer{hideinstitute}{\def\beamer@hideinst{true}}
+\DeclareOptionBeamer{shownavsym}{\def\beamer@shownavsym{true}}
+\ExecuteOptionsBeamer{right}
+\ProcessOptionsBeamer
+
+%%% theme definitions
+\newlength{\beamer@sidebarwidth}% width of side bar
+\ifx\beamer@width\undefined% set default sidebar width
+	\setlength{\beamer@sidebarwidth}{2cm}%
+\else% set sidebar width to parameter of width
+	\setlength{\beamer@sidebarwidth}{\beamer@width}%
+\fi
+\newlength{\beamer@height}% height of the header
+\usebeamerfont{frametitle}
+\setlength{\beamer@height}{2.5\baselineskip}%
+\reset@font
+\newlength{\beamer@barwidth}% width of bar
+\setlength{\beamer@barwidth}{2\beamer@height/15}%
+\def\beamer@sidebarleft{left}% used for comparison below
+
+% end of theme options and definitions
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer specific options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mode<presentation>% refers to the first four modes (beamer,handout,second and trans). That is, to all modes except the article mode
+{
+	%% test for the BKU sidebar color defined
+	\ifbeamercolorempty[fg]{BKUsidebar}
+	{
+		%define the BKU sidebar color if it is not defined (which may be due to that the BKUsidebar color theme is not loaded)
+		\setbeamercolor{BKUsidebar}{use={structure,palette sidebar primary},fg=palette sidebar primary.fg,bg=structure.fg}
+	}
+	{
+		%BKU header color is defined - nothing to do
+	}
+	
+	%% headline
+	\defbeamertemplate*{headline}{BKUsidebar theme}
+	{
+		\BKUheaderbackground% insert background and logo
+	} 
+	
+	%% frame title
+	\defbeamertemplate*{frametitle}{BKUsidebar theme}
+	{
+		\setbeamerfont*{frametitle}{series=\bf,size=\Large}
+		\setbeamerfont*{framesubtitle}{series=\it,size=\small}
+		\ifx\beamer@sidebarside\beamer@sidebarleft% sidebar on the left
+			\hfill
+		\fi
+		\begin{minipage}[t][\beamer@height][t]{\textwidth-\beamer@height/2}
+			{
+				\usebeamercolor[fg]{frametitle}
+				\usebeamerfont{frametitle}
+				\vskip2pt
+				\insertframetitle\par
+			}
+			{
+				\usebeamercolor[fg]{framesubtitle}
+				\usebeamerfont{framesubtitle}
+				\vskip2pt
+				\ifx\insertframesubtitle\@empty\
+					% do nothing
+	    		\else
+					\insertframesubtitle
+				\fi
+				\par
+			}
+		\end{minipage}
+		\ifx\beamer@sidebarside\beamer@righttext% sidebar on the right
+			\hfill
+		\fi
+	}
+	
+	%% sidebar
+	\setbeamersize{sidebar width \beamer@sidebarside=\beamer@sidebarwidth}
+	\defbeamertemplate*{sidebar \beamer@sidebarside}{BKUsidebar theme}
+	{
+	% insert bar and total page circle
+		\BKUsidebarbackground
+	% short title
+		\setbeamerfont{title in sidebar}{series=\bfseries}
+		\vspace{\beamer@height}
+		\vspace{2\baselineskip}\par
+		\ifx\beamer@hidetitle\undefined% insert short title
+			\vspace{-\baselineskip}%
+			\hspace{.05\beamer@sidebarwidth}%
+			{%
+				\usebeamercolor[fg]{title in sidebar}%
+				\usebeamerfont{title in sidebar}%
+				\insertshorttitle[width={.9\beamer@sidebarwidth},center,respectlinebreaks]%
+			}%
+			\hspace{.05\beamer@sidebarwidth}%
+			\vspace{2\baselineskip}\par%
+		\fi
+	% short author
+		\setbeamerfont{author in sidebar}{series=\bfseries}
+		\ifx\beamer@hideauthor\undefined% insert short author
+			\author{\insertstudent}
+			\vspace{-\baselineskip}%
+			\hspace{.05\beamer@sidebarwidth}%
+			{%
+				\usebeamercolor[fg]{author in sidebar}%
+				\usebeamerfont{author in sidebar}%
+				\insertshortauthor[width={.9\beamer@sidebarwidth},center,respectlinebreaks]%
+			}%
+			\hspace{.05\beamer@sidebarwidth}%
+			\vspace{\baselineskip}\par%
+		\fi
+	% TOC in sidebar
+		\insertverticalnavigation{\beamer@sidebarwidth}%
+		\strut\vfill%
+	% short institute
+		\ifx\beamer@hideinst\undefined% insert short institute
+			\vbox
+			{
+				\hspace{.05\beamer@sidebarwidth}%
+				{%
+					\usebeamercolor[fg]{title in sidebar}
+					\usebeamerfont{subtitle in sidebar}%
+					\insertshortinstitute[width={.9\beamer@sidebarwidth},center,respectlinebreaks]
+				}
+				\hspace{.05\beamer@sidebarwidth}%
+				\vspace*{\baselineskip}
+			}%
+		\fi
+		
+	%% navigation symbols
+		\ifx\beamer@shownavsym\undefined% disable navigation symbols
+			% nothing to do
+		\else% enable navigation symbols
+			\vspace*{-2\baselineskip}
+			\llap{\usebeamertemplate***{navigation symbols}\hskip0.4cm}
+			\vskip2pt
+		\fi
+	}
+	
+	%% current section in the sidebar
+	\defbeamertemplate*{section in sidebar}{BKUsidebar theme}
+	{%
+		\vbox
+		{
+			\vskip1ex% add some extra space when inserting a new section
+			\sidebarnavitem{4pt}{section in sidebar}
+			{
+				\sidebarcurframe{\insertframenumber}%
+				\textbf{\insertsectionhead}
+			}
+		}
+	}
+
+	%% all section in the sidebar but the current
+	\defbeamertemplate*{section in sidebar shaded}{BKUsidebar theme}
+	{%
+		\vbox
+		{
+			\vskip1ex% add some extra space when inserting a new section
+			\sidebarnavitem{4pt}{section in sidebar shaded}{\textbf{\insertsectionhead}}
+		}
+	}
+
+	%% current subsection in the sidebar
+	\defbeamertemplate*{subsection in sidebar}{BKUsidebar theme}
+	{%
+		\sidebarnavitem{6pt}{subsection in sidebar}
+		{
+			\sidebarcurframe{\insertframenumber}%
+			\textbf{\insertsubsectionhead}
+		}
+	}
+
+	%% all subsection in the sidebar but the current
+	\defbeamertemplate*{subsection in sidebar shaded}{BKUsidebar theme}
+	{%
+		\sidebarnavitem{6pt}{subsection in sidebar shaded}{\textbf{\insertsubsectionhead}}
+	}
+
+	%% current subsubsection in the sidebar
+	\defbeamertemplate*{subsubsection in sidebar}{BKUsidebar theme}
+	{%
+		\sidebarnavitem{8pt}{subsubsection in sidebar}
+		{
+			\sidebarcurframe{\insertframenumber}%
+			\textbf{\insertsubsubsectionhead}
+		}  
+	}
+
+	%% all subsubsection in the sidebar but the current
+	\defbeamertemplate*{subsubsection in sidebar shaded}{BKUsidebar theme}
+	{%
+		\sidebarnavitem{8pt}{subsubsection in sidebar shaded}{\textbf{\insertsubsubsectionhead}} 
+	}
+	
+	%% When the sidebar is on the left, the default theme insert navigation sysbols. We just insert it if option is set
+	\ifx\beamer@sidebarside\beamer@sidebarleft% sidebar on the left
+		\defbeamertemplate*{sidebar right}{AAUsidebar theme}
+		{
+			\ifx\beamer@shownavsym\undefined% disable navigation sysbols
+				% nothing to do
+			\else% enable navigation symbols
+				\vfill%
+				\llap{\usebeamertemplate***{navigation symbols}\hskip0.4cm}
+				\vskip2pt
+			\fi
+		}
+	\fi
+}
+
+% end of beamer specific options
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros used in the theme 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% the fancy header background
+\newcommand{\BKUheaderbackground}[0]
+{
+	\begin{tikzpicture}[overlay]
+		\ifx\beamer@sidebarside\beamer@sidebarleft% sidebar on the left
+			\coordinate (UC) at (\paperwidth,0);% upper right corner of the slide
+			\coordinate (LC) at (0,-\paperheight);% lower left corner of the slide
+			\coordinate (BS) at (\paperwidth,-\beamer@height);% start coordinate of the bar
+			\coordinate (BE) at (\beamer@sidebarwidth+\beamer@barwidth/2,-\paperheight);% end coordinate of the bar
+		\else% sidebar on the right
+			\coordinate (UC) at (0,0);% upper left corner of the slide
+			\coordinate (LC) at (\paperwidth,-\paperheight);% lower right corner of the slide
+			\coordinate (BS) at (0,-\beamer@height);% start coordinate of the bar
+			\coordinate (BE) at (\paperwidth-\beamer@sidebarwidth-\beamer@barwidth/2,-\paperheight);% end coordinate of the bar
+		\fi
+		\coordinate (IS) at (BS -| BE);% intersection
+		\coordinate (logopos) at ([yshift=\beamer@height/2] IS);% coordinate of the logo
+		% draw the background of the header, the circle and the logo
+		{
+			\usebeamercolor{frametitle}
+			\usebeamercolor{BKUsidebar}
+			\draw[draw=none,fill=frametitle.bg] (UC) rectangle (IS -| BE);
+			\fill[fill=BKUsidebar.fg] ([yshift=\beamer@height/2] IS) circle (1.1*\beamer@height/2);
+			\node at (logopos) {\includegraphics[width=0.95\beamer@height]{figures/hcmut.png}};
+		}
+	\end{tikzpicture}
+}
+
+%%% the fancy background in the sidebar
+\newcommand{\BKUsidebarbackground}[0]
+{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\ifx\beamer@sidebarside\beamer@sidebarleft% sidebar on the left
+			\coordinate (BS) at (\paperwidth,-\beamer@height);% start coordinate of the bar
+			\coordinate (BE) at (\beamer@sidebarwidth+\beamer@barwidth/2,-\paperheight);% end coordinate of the bar
+		\else% sidebar on the right
+			\coordinate (BS) at (-\paperwidth+\beamer@sidebarwidth,-\beamer@height);% start coordinate of the bar
+			\coordinate (BE) at (-\beamer@barwidth/2,-\paperheight);% end coordinate of the bar
+		\fi
+		\coordinate (IS) at (BS -| BE);% intersection
+		% draw the thick line
+		{
+			\usebeamercolor{BKUsidebar}
+			\draw[color=BKUsidebar.fg,line width=\beamer@barwidth] (IS) -- (BE);
+		}
+		% draw the circle with the total frame number
+		{
+			\usebeamerfont{subsection in sidebar}
+			\usebeamercolor{BKUsidebar}
+			\node[fill=beamer@lightheadercolor,draw=BKUsidebar.fg,circle,very thick,minimum width=4mm] at ([yshift=2mm] BE) {\usebeamercolor[fg]{subsection in sidebar}\inserttotalframenumber};
+		}
+	\end{tikzpicture}
+}
+
+%%% sidebar navigation item  
+\newcommand{\sidebarnavitem}[3]
+{%
+	\begin{beamercolorbox}[wd=\beamer@sidebarwidth,leftskip=#1,rightskip=3ex plus1fill,vmode]{#2}%
+		\vbox{}%
+		\vskip.2ex%
+		#3\par%
+		\vbox{}%
+		\vskip-1.4ex%
+	\end{beamercolorbox}%
+}%
+
+%%% current frame number
+\newcommand{\sidebarcurframe}[1]%
+{%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\coordinate (CS) at (0,0.8ex);% coordinate of the current section
+		\coordinate (CF) at (IS |- CS);% coordinate of the current frame number
+		{%
+%			\draw[color=bg,line width=\beamer@barwidth] (IS) -| (CF);
+			\node[fill=beamer@lightheadercolor,draw=beamer@barcolor,circle,minimum width=3.5mm,thick] at (CF) {{\fontsize{4}{5}\selectfont{\usebeamercolor[fg]{subsection in sidebar}#1}}};%
+		}%
+	\end{tikzpicture}%
+}%
+
+\mode<all>

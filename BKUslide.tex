@@ -1,0 +1,1333 @@
+% This is the beamer document file of the BKU sidebar theme.
+% Copyright (c) 2019/06/20 by Nguyen Van Hung <nvhung1401@gmail.com>m>.
+\documentclass[
+%%% options passed to the beamer
+	10pt,                % font size
+%	t,                   % position text on top of frame (default is c)
+%	leqno,               % equation numbering on the left (default is on the right)
+%	fleqn,               % equation is on the left (default is in the middle)
+	aspectratio=169,     % aspect ratio (default is 4:3)
+%	handout,             % disable "\pause" and "\only" mode
+]{beamer}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load theme
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetheme[
+%%% options passed to the outer theme
+%	left,                % right of left position of sidebar (default is right)
+	width=2.25cm,        % width of the sidebar (default is 2 cm)
+%	hidetitle,           % hide the (short) title in the sidebar
+%	hideauthor,          % hide the (short) author in the sidebar
+	hideothersubsections,% hide all subsections but the subsections in the current section
+%	hideallsubsections,  % hide all subsections
+%	hideinstitute,       % hide the (short) institute in the bottom of the sidebar
+%	shownavsym,          % show the navigation symbols
+%%% options passed to the inner theme
+%	transparent,         % install animation
+%%% options passed to the color theme
+	lightheaderbg,       % use a light header background
+]{BKUsidebar}
+
+% end of load theme
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load package and definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\uselanguage{vietnamese}                        % "english" or "vietnamese"
+\usepackage{multicol}                           % provides multicolumn environment
+\usepackage{graphicx}                           % provides commands about graphic
+\usepackage{ragged2e}                           % provides justify command
+\usepackage{verbatim}                           % provides verbarim environment
+\usepackage{xcolor}                             % provides commands about color
+\usepackage{subcaption}							% provides environment for subfigure
+\usepackage{booktabs}							% provides more rules in talble
+\usepackage{multirow}							% provides multirow in table
+\usepackage{pgfplots}							% plot fuction in tikz
+\usepackage{pgfgantt}
+\usepackage{makecell}
+\newcommand\Dganttbar[4]{
+	\ganttbar{#1}{#3}{#4}\ganttbar[inline,bar label font=\footnotesize]{#2}{#3}{#4}
+}
+
+\definecolor{commentcolor}{RGB}{0,128,58}       % green
+\definecolor{keywordcolor}{RGB}{55,0,255}       % blue
+\definecolor{stringcolor}{RGB}{167,21,62}       % dark red
+\definecolor{backgroundcolor}{RGB}{30,30,30}    % dark gray
+\lstset
+{
+	language=C++,                               % language programming
+	basicstyle=\ttfamily,                       % type for basic
+	keywordstyle=\bfseries\color{keywordcolor}, % type for keywords
+	identifierstyle=\color{black},              % type for identifier
+	stringstyle=\color{stringcolor},            % type for string
+	commentstyle=\color{commentcolor},          % type for comment
+	emph={iostream},                            % first list of another word
+	emphstyle=\color{stringcolor},              % type for first list of another word
+%	emph={[2]word3},                            % second list of another word
+%	emphstyle=[2]\color{red},                   % type for second list of another word
+	tabsize=2,                                  % width of tab
+%	showtabs=true,                              % enable character tab
+%	tab=\rightarrowfill,                        % character tab
+%	showspaces=true,                            % enable character spaces in all code
+	showstringspaces=true,                      % enable character spaces in string
+	breaklines=true,                            % enable breaklines mode
+	escapechar=\@,                              % character to back to LaTeX mode
+	numbers=left,                               % lines numbering on left
+	numberstyle=\normalsize,                    % stype for lines number
+%	firstnumber=100,                            % first number counting for lines number
+	stepnumber=1,                               % step lines numbering
+	numbersep=5pt,                              % space between lines number and code
+%	frame=leftline,                             % insert line for lines numbering
+%	frame=single,                               % insert box with single line
+%	framerule=1pt,                              % width of line of box
+	xleftmargin=5mm,                            % left margin
+%	xrightmargin=1cm,                           % right margin
+%	backgroundcolor=\color{backgroundcolor},    % white background
+	captionpos=b,                               % position of caption
+}
+
+\newcommand\footnotesource[1]{					% footnote for data source
+	\vspace{-10mm}\let\thefootnote\relax\footnote{\hspace{-3mm}\tiny Nguồn:~#1}
+}
+
+\usepackage{multirow, booktabs}
+
+\usepackage[
+    backend=biber,
+    style=alphabetic,
+    sorting=ynt
+    ]{biblatex}
+% \addbibresource{ref.bib}
+
+% end of load package and definitions
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Information on title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lecture
+	{}
+	{2021/07/26}
+\title
+	[Xây dựng hệ thống quản lý quá trình gia công nhuộm cho một doanh nghiệp vải sợi trên nền web]% optional, use only with long paper titles
+	{\scalebox{.84}[1]{XÂY DỰNG HỆ THỐNG QUẢN LÝ QUÁ TRÌNH}\\\scalebox{.84}[1]{GIA CÔNG NHUỘM TRÊN NỀN WEB}\\}
+\subtitle
+	{Luận văn tốt nghiệp}% could also be a subject name
+\subject
+	{TP. Hồ Chí Minh}% could also be address
+%\reference
+%	{reference}
+\institute
+	[Khoa KH - KT Máy tính\\Đại học Bách Khoa]% optional - use only with long paper institute
+	{Khoa Khoa học - Kỹ thuật Máy tính\\Đại học Bách Khoa - Đại học quốc gia TP.HCM}
+\instructor
+	{GVHD: \\ \\GVPB: }
+	{ ThS. Nguyễn Thị Ái Thảo\\ \\ ThS. Trần Quang }% use "\\" between instructors with lots of instructors
+\student
+	[SVTH: ]% must be inserted if instructor inserted
+	{Nguyễn Trung Tính\\ Nguyễn Xuân Huy}% use "\\" between students with lots of students
+	{1713521\\ 1711574}% Similar to students
+
+% end of information on title page
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%-The-title-page--------------------------------
+\begin{frame}[noframenumbering]
+	\titlepage
+\end{frame}
+
+%-TOC-------------------------------------------
+\section*{Mục lục}
+	\begin{frame}{Mục lục}
+		\hfill
+		\parbox[c]{.98\textwidth}{
+			\vspace{-3mm}
+			\tableofcontents[hideallsubsections]% the hideallsubsections option removes subsection/subsubsection in TOC
+		}
+	\end{frame}
+
+%-Contents--------------------------------------
+\section{Tổng quan}
+
+\subsection{Giới thiệu đề tài}
+	\begin{frame}{Tổng quan}{Giới thiệu đề tài}
+	    \begin{block}{Động lực thực hiện}
+			\begin{enumerate}
+				\item Ứng dụng của khoa học công nghệ trong lĩnh vực tài chính đang là xu hướng của hiện tại
+				\item Rủi ro về những vấn đề liên quan đến bảo mật như: gian lận trong giao dịch tài chính, tài khoản bị đánh cắp,...
+			\end{enumerate}
+		\end{block}
+		\vspace{-0.2cm}
+		\begin{figure}[h!]
+			\includegraphics[scale=0.1]{figures/Fraud-Prevention-Tools.png}
+			\caption{Bức tranh chung về ngăn chặn và phát hiện gian lận}
+		\end{figure}
+		\footnotesource{ \url{https://securionpay.com/wp-content/uploads/2020/04/Fraud-Prevention-Tools.png}}
+	\end{frame}
+
+	
+\subsection[Mục tiêu và phạm vi]{Mục tiêu và phạm vi đề tài}
+	\begin{frame}{Tổng quan}{Mục tiêu và phạm vi đề tài}
+		\begin{block}{Mục tiêu và phạm vi đề tài}
+			\begin{enumerate}
+				\item Tìm hiểu bài toán phân loại một lớp và bài toán phát hiện ngoại lai
+				\item Hiện thực mô hình ứng dụng
+				\item Đề xuất cải tiến
+			\end{enumerate}
+		\end{block}
+	\end{frame}
+	
+\subsection[Thách thức]{Thách thức của đề tài}
+	\begin{frame}{Tổng quan}{Những thách thức}
+% 		\vspace{1mm}
+% 		\begin{figure}[h!]
+% 			\begin{subfigure}[b]{0.45\textwidth}
+% 				\includegraphics[height=.35\textheight]{Presentation_template/figures/liver-vessel-bg-ratio.pdf}
+% 				\caption{Tỉ lệ gan, mạch máu trong ảnh CT.}
+% 			\end{subfigure}
+% 			\begin{subfigure}[b]{0.45\textwidth}
+% 			\centering
+% 				\includegraphics[height=.35\textheight]{Presentation_template/figures/ct-low-constrast.pdf}
+% 				\caption{Một lát cắt ảnh CT.}
+% 			\end{subfigure}
+% 		\end{figure}
+% 		\vspace{-3mm}
+		\begin{block}{Những thách thức của đề tài}
+			\begin{enumerate}
+				\item Hạn chế về số lượng dữ liệu.
+				\item Mất cân bằng dữ liệu.
+				\item Chi phí tính toán cao.
+			\end{enumerate}
+		\end{block}
+	\end{frame}
+
+\section{Giới thiệu tổng quan bài toán phân loại một lớp}
+\subsection{One-class classification}
+    \begin{frame}{Khái niệm}
+    		\begin{figure}
+		\centering
+		\includegraphics[scale=0.35]{figures/occ.png}
+		\caption{Bài toán phân loại một lớp}
+	\end{figure}
+	\footnotesource{src="https://www.researchgate.net/profile/Michal_Wozniak3/publication/261077107/figure/fig1/AS:636612455190530@1528791645409/Example-of-one-class-classification-with-known-target-class-used-for-the-boundary.png"} 
+    	\end{frame}
+    \begin{frame}{Ứng dụng thực tiễn}
+    		\begin{block}{Một số ứng dụng thực tiễn hiện nay}
+			\begin{enumerate}
+				\item Phát hiện gian lận trong giao dịch tài chính
+				\item Phát hiện thư rác
+				\item Phát hiện lỗi chi tiết máy trong công nghiệp.
+			\end{enumerate}
+		\end{block}
+    	\end{frame}
+    	
+	    \begin{frame}{So sánh với bài toán phân loại nhiều lớp}
+		\begin{block}{Một số tính chất mang tính đặc trưng so với bài toán phân loại nhiều lớp}
+		\begin{enumerate}
+			\item Dữ liệu đầu vào
+			\item Cơ chế phân loại
+		\end{enumerate}
+	\end{block}
+	\end{frame}
+	
+	 \begin{frame}{Thách thức và khó khăn}
+	\begin{block}{Thách thức và khó khăn khi tiếp cận bài toán phân loại một lớp}
+	\begin{enumerate}
+		\item Yêu cầu nghiêm ngặt và chặt chẽ về mặt dữ liệu
+		\item Sự phân bố về mặt dữ liệu
+	\end{enumerate}
+    \end{block}
+    \end{frame}
+
+\subsection{Hướng tiếp cận - Ưu-nhược điểm của chúng}
+    \begin{frame}{Phân tích ưu-nhược điểm của các hướng tiếp cận}
+  % Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}|l|l|l|@{}}
+\toprule
+Phương pháp &
+  Ưu điểm &
+  Nhược điểm \\ \midrule
+K-Nearest Neighbors &
+  \begin{tabular}[c]{@{}l@{}}Không quá nhạy cảm với dữ liệu nhiễu \\ Không cần có sự chuẩn bị chu đáo về mặt dữ liệu \\ Không cần phải nỗ lực quá nhiều trong việc hiệu chỉnh mô hình\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Thiếu khả năng diễn giải \\ Cần một lượng tài nguyên khá lớn khi thực hiện huấn luyện\end{tabular} \\ \midrule
+Neural Networks &
+  Độ chính xác cao so với những mô hình khác &
+  \begin{tabular}[c]{@{}l@{}}Cấu trúc và tính toán phức tạp \\ Phải đảm bảo một nguồn tài nguyên đủ lớn \\ Không thể đặc tả được khả năng suy diễn\end{tabular} \\ \midrule
+Support Vector Machine &
+  \begin{tabular}[c]{@{}l@{}}Làm việc tốt với dữ liệu nhiều chiều \\ Mô hình đơn giản, dễ điều chỉnh mô hình\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Nặng nề trong việc tính toán nên dẫn đến sự chậm chạm \\ Nguồn tài nguyên tính toán đủ lớn\end{tabular} \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+        \end{frame}
+        
+        
+\section{Mô hình Support Vector Machine cho bài toán phân loại một lớp}
+\subsection{Tổng quan Support Vector Machine}
+	\begin{frame}{Giới thiệu}
+	    \begin{figure}[h!]
+			\includegraphics[scale=0.5]{figures/ssvm1.png}
+			\caption{Mẫu dữ liệu trong không gian hai chiều}
+		\end{figure}
+		\begin{block}{Giới thiệu bài toán Support Vector Machine}
+    	\begin{enumerate}
+    		\item Phương pháp phân loại dữ liệu có giám sát
+    		\item Dựa trên nền tảng lý thuyết thống kê và lý thuyết không gian vector.
+    	\end{enumerate}
+        \end{block}
+	\end{frame}
+	
+	\begin{frame}{Biến thể của Support Vector Machine}
+	    
+	    \begin{figure}[h!]
+			\includegraphics[scale=0.5]{figures/svm1.png}
+			\caption{Hai lớp dữ liệu tuyến tính}
+		\end{figure}
+		\begin{block}{Hard-margin SVM}
+    	\begin{enumerate}
+    		\item Làm việc với dữ liệu phân biệt tuyến tính
+    		\item Xác định siêu phẳng để phân chia tập dữ liệu tuyến tính
+    	\end{enumerate}
+        \end{block}
+        
+	\end{frame}
+
+	\begin{frame}{Biến thể của Support Vector Machine}
+	    \begin{figure}[h!]
+			\includegraphics[scale=0.5]{figures/svm3.png}
+			\caption{Margin càng lớn sẽ đem lại bộ phân chia càng tốt}
+		\end{figure}
+    \begin{block}{Hard-margin SVM}
+    	\begin{itemize}
+    		\item Tối ưu bài toán bằng cách đi tìm giá trị lớn nhất của margin
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+    
+        \begin{frame}{Biến thể của Support Vector Machine}
+	    \begin{figure}[h!]
+			\includegraphics[scale=0.5]{figures/ssvm1.png}
+			\caption{Hai lớp dữ liệu gần tuyến tính}
+		\end{figure}
+    \begin{block}{Sort-margin SVM}
+    	\begin{itemize}
+    		\item  Tập dữ liệu có chứa điểm nhiễu hay tập dữ liệu gần tuyến tính
+    		\item Hard-margin SVM làm việc không hiểu quả hoặc thậm chí không làm việc
+    	\end{itemize}
+        \end{block}
+    \end{frame}
+    
+    \begin{frame}{Biến thể của Support Vector Machine}
+        \begin{block}{Sort-margin SVM}
+          \begin{figure}[h!]
+        	\includegraphics[scale=0.5]{figures/slackVariable.png}
+        	\caption{Giới thiệu các biến slack }
+        \end{figure}  
+        \end{block}
+    \end{frame}	
+    
+     \begin{frame}{Biến thể của Support Vector Machine}
+    \begin{block}{Kernel Support Vector Machine}
+    	\begin{itemize}
+    		\item  Sử dụng đối với những tập dữ liệu không tuyến tính
+    		\item Thực hiện phép biến đổi dữ liệu không tuyến tính ở một không gian sang một không gian khác
+    	\end{itemize}
+        \end{block}
+        
+        \begin{block}{Một số hàm Kernel thông dụng}
+    	\begin{itemize}
+    		\item Polynomial kernel $$K(x,z)=(x^{T}z)^{d}$$
+    		\item linear kernel $$K(x,z)=x^{T}z$$
+    		\item kernel Gaussian $$K(x,z)=exp(-\gamma \left \| x-z \right \|^{2}_{2}), \gamma > 0$$
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+    
+\subsection{Biến thể SVM cho bài toán phân loại một lớp}
+     \begin{frame}{Support Vector Data Description}
+    \begin{block}{Giới thiệu}
+    	\begin{itemize}
+    		\item  Sử dụng siêu cầu thay vì siêu phẳng.
+    		\item Sử dụng Kernel để biến đổi dữ liệu trong mô hình.
+    	\end{itemize}
+        \end{block}
+        
+        \begin{block}{Công thức toán học}
+    	\begin{itemize}
+    		\item Hàm mục tiêu ban đầu:
+    		\begin{equation}\label{svdd1}
+                \begin{align}
+                     F(R, \mathbf{a})= R^{2} \rightarrow  \min_{R, a}
+                \end{align}
+            \end{equation}
+            với ràng buộc:
+            \begin{equation}\label{svdd2}
+                \begin{align}
+                    \left \| \mathbf{x_{i}} -\mathbf{a }\right \|^{2}\leqslant R^{2}, \forall i 
+                \end{align}
+            \end{equation}
+    	\end{itemize}
+        \end{block}
+    \end{frame}	   
+    
+         \begin{frame}{Support Vector Data Description}
+        \begin{block}{Công thức toán học}
+    	\begin{itemize}
+            \item Hàm mục tiêu với biến slack:
+                		\begin{equation}\label{svdd3}
+                            \begin{align}
+                                F(R, a) = R^{2} + C\sum_{i}^{}\varepsilon _{i} \rightarrow  \min_{R, a, \varepsilon }
+                            \end{align}
+                        \end{equation}
+                        với ràng buộc:
+                        \begin{equation}\label{svdd4}
+                            \begin{align}
+                                \left \| \mathbf{x_{i}} -\mathbf{a }\right \|^{2}\leqslant R^{2} + \varepsilon _{i},\, \, \, \,  \varepsilon _{i}\geq 0 \, \, \forall i \\
+                            \end{align}
+                        \end{equation} 
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+    
+             \begin{frame}{Support Vector Data Description}
+        \begin{block}{Công thức toán học}
+    	\begin{itemize}
+            \item Sử dụng Lagrange đối với hàm mục tiêu trên:
+            \begin{equation}\label{svdd5}
+                \begin{aligned}
+                L(R, \mathbf{a}, \alpha _{i}, \gamma _{i}, \varepsilon _{i})= & R^{2} + C\sum_{i}^{}\varepsilon _{i} \\
+             & - \sum_{i}^{}\alpha _{i}(R^{2}+\varepsilon _{i}-
+            (\left \| \mathbf{x_{i}}\right \|^{2} - 2\mathbf{a.x_{i}} + \left \| \mathbf{a} \right \|^{2})) - \sum_{i}^{}\gamma _{i}\varepsilon i
+                \end{aligned}
+            \end{equation} 
+                		
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+    
+    \begin{frame}{Support Vector Data Description}
+        \begin{block}{Công thức toán học}
+    	\begin{itemize}
+            \item Thực hiện tính đạo hàm từng phần, kết hợp với điều kiện và phần lý thuyết Kernel, cuối cùng ta được hàm phân loại có dạng sau:
+            \begin{equation}\label{svdd12}
+                \begin{align}
+           f(x)= K(\mathbf{x, x}) - 2\sum_{i}^{}\alpha _{i}K(\mathbf{x, x_{i}}) + \left \| \mathbf{a }\right \|^{2}_{2} - R^{2}
+                \end{align}
+            \end{equation} 
+            với bán kính của siêu cầu là:
+             \begin{equation}\label{svdd12}
+                \begin{align}
+            R = \left \| \phi (\mathbf{\mathbf{x_{i}}})-\mathbf{a} \right \|_{2}= \sqrt{\left \| \phi (\mathbf{x_{i}}) \right \|_{2}^{2} -2\mathbf{a}.\phi (\mathbf{x_{i}}) + \left \| \mathbf{a} \right \|_{2}^{2}}
+                \end{align}
+            \end{equation} 
+                		
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+    
+    \begin{frame}{One-class Support Vector Machine}
+        \begin{block}{Giới thiệu}
+    	\begin{itemize}
+            \item sử dụng một siêu mặt phẳng phân tách thay cho siêu cầu
+            \item xây dựng một siêu mặt phẳng cách xa điểm gốc một cách tối đa, với tất cả các điểm dữ liệu nằm ở phía đối diện với điểm gốc và sao cho biên là dương
+            \item Dữ liệu được ánh xạ vào không
+            gian đặc trưng tương ứng với kernel và được tách biệt khỏi nguồn gốc với lề tối đa
+           
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+    
+\subsection{Thực nghiệm và kết quả}
+         \begin{frame}{Thực nghiệm và kết quả}
+                \begin{block}{Tập dữ liệu}
+            		\begin{figure}
+                		\centering
+                 	\includegraphics[scale=0.35]{figures/banana.png}
+                		\caption{Bộ dữ liệu Banana}
+                	\end{figure}
+                \end{block}
+            \end{frame}	
+            
+            \begin{frame}{Thực nghiệm và kết quả}
+                \begin{block}{Kết quả với Kernel Gauss}
+            		\begin{figure}
+                		\centering
+            	\includegraphics[scale=0.22]{figures/gauss_result.png}
+                		\caption{ Biểu đồ kết quả huấn luyện mô hình SVDD kernel Gauss}
+                	\end{figure}
+                \end{block}
+            \end{frame}	
+            
+            \begin{frame}{Thực nghiệm và kết quả}
+                \begin{block}{Kết quả với Linear Kernel}
+            		\begin{figure}
+                		\centering
+            	\includegraphics[scale=0.22]{figures/linear_result.png}
+                		\caption{ Biểu đồ kết quả huấn luyện mô hình SVDD với Linear Kernel}
+                	\end{figure}
+                \end{block}
+            \end{frame}	
+            
+            \begin{frame}{Thực nghiệm và kết quả}
+                \begin{block}{Kết quả với Laplace Kernel}
+            		\begin{figure}
+                		\centering
+            	\includegraphics[scale=0.22]{figures/lapl_result.png}
+                		\caption{ Biểu đồ kết quả huấn luyện mô hình SVDD với Laplace Kernel}
+                	\end{figure}
+                \end{block}
+            \end{frame}	
+            \begin{frame}{Thực nghiệm và kết quả}
+                \begin{block}{Kết quả với Polynomial Kernel}
+            		\begin{figure}
+                		\centering
+            	\includegraphics[scale=0.22]{figures/poly_result.png}
+                		\caption{ Biểu đồ kết quả huấn luyện mô hình SVDD Polynomial Kernel}
+                	\end{figure}
+                \end{block}
+            \end{frame}	
+            \begin{frame}{Thực nghiệm và kết quả}
+                \begin{block}{Kết quả với Tanh Kernel}
+            		\begin{figure}
+                		\centering
+            	\includegraphics[scale=0.22]{figures/tanh_result.png}
+                		\caption{ Biểu đồ kết quả huấn luyện mô hình SVDD Tanh kernel}
+                	\end{figure}
+                \end{block}
+            \end{frame}	
+            
+
+
+    
+    
+
+    
+\section{Ứng dụng phát hiện dữ liệu ngoại lai}
+\subsection{Giới thiệu}
+	\begin{frame}{Giới thiệu bài toán phát hiện dữ liệu ngoại lai}
+        \begin{block}{Giới thiệu}
+    	\begin{itemize}
+            \item  Là bài toán phát hiện bất thường, hoặc phát hiện tính mới
+            \item Có nhiều phát triển tích cực trong vài thập
+                kỷ gần đây
+            \item Ứng dụng tiềm năng trong các lĩnh vực lớn khác, có thể kể đến như an ninh bảo mật, giám sát
+tài chính, giám sát sức khỏe trong y tế và nhận biết các rủi ro trong kỹ thuật
+           
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+    
+\subsection{Thách thức và khó khăn}
+
+	\begin{frame}{Những vấn đề phức tạp tiêu biểu}
+        \begin{block}{Vấn đề phức tạp}
+    	\begin{itemize}
+            \item  Dữ liệu không xác định   
+            \item Các lớp dữ liệu ngoại lai không đồng nhất
+            \item Sự hiếm hoi và mất cân bằng về mặt dữ liệu
+            \item Sự đa dạng về các loại bất thường
+           
+    	\end{itemize}
+        \end{block}
+        
+        \begin{block}{Thách thức}
+    	\begin{itemize}
+            \item  Phát hiện các dị thường phức tạp
+            \item Áp dụng với dữ liệu nhiều chiều
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+    
+\section{Thuật toán đề xuất}
+	\begin{frame}{Thuật toán đề xuất}
+        \begin{block}{Một số hướng đề xuất cho luận văn}
+    	\begin{itemize}
+            \item  Kết hợp one-class SVM với mô hình Neural Networks
+            \item Support Vector Data Description kết hợp với Privileged Information
+            \item One-class Support Vector Machine kết hợp với Privileged Information
+           
+    	\end{itemize}
+        \end{block}
+    \end{frame}	
+	
+% \subsection{Các khối tính toán}
+%     \begin{frame}{Các khối tính toán}
+%         \begin{figure}[h!]
+% 			\begin{subfigure}[b]{0.5\textwidth}
+% 			    \centering	\includegraphics[scale=0.45]{figures/arch/RSU_L3.pdf}
+% 				\caption{Residual U-Block RSU-L(In, M, Out)}
+% 			\end{subfigure}
+% 			\begin{subfigure}[b]{0.4\textwidth}
+% 			    \centering	\includegraphics[scale=0.45]{figures/arch/convblock.pdf}
+% 				\caption{ConvBlock(In, M, Out)}
+% 			\end{subfigure}
+% 			\vspace{-3mm}
+% 		\end{figure}
+%     \end{frame}%------------------------------
+    
+% 	\begin{frame}{Kiến trúc mô hình chi tiết}
+% 		\vspace{-0.3cm}
+% 		\begin{figure}[h!]
+% 			\includegraphics[scale=0.37]{figures/arch/u2net3d_arch.pdf}
+% 		\end{figure}
+% 	\end{frame}%------------------------------
+	
+% \subsection{Hàm mục tiêu}
+% 	\begin{frame}{Hàm mục tiêu}
+% 	    \begin{align}
+%             Loss = \mu_{1}Loss_{s1} + \mu_{2}Loss_{s2} + \mu_{3}Loss_{main}
+%         \end{align}
+%         % Trong đó loss được tính dựa trên 2 công thức BCE hoặc Focal Loss:
+%         \begin{align}
+%             \mathrm{BCELoss}(q, p) &= -\log(q)\\
+%             \mathrm{FocalLoss}(q, p) &= -\alpha(1-q)^\gamma \log(q)\\
+%             \nonumber
+%             \alpha = \begin{cases} 
+%                             \alpha & \text{if } p = 1 \\
+%                             1-\alpha & \text{otherwise}
+%                         \end{cases}
+%             &\quad and \quad
+%             \mathrm{q} = \begin{cases} 
+%                     q & \text{if } p = 1 \\
+%                     1-q & \text{otherwise}
+%                   \end{cases}
+%         \end{align}
+%         \vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-3mm}\tiny *Các tham số $\mu_1=1, \mu_2=2, \mu_3=4$ đại diện cho mức độ quan trong của việc giám sát đặc trưng của các tầng.}
+% 	\end{frame}
+
+% \section{Thí nghiệm và kết quả}
+%  \subsection{Tập dữ liệu}
+% 	\begin{frame}{Tập dữ liệu}{Thông tin}
+% 		\begin{block}{Các tập dữ liệu}
+% 			\begin{enumerate}
+% 				\item Segmentation of the Liver 2007 (SLIVER07).
+% 				\item Liver Tumor Segmentation Challenge (LITS2017).
+% 				\item 3D Image Reconstruction for Comparison of Algorithm Database (3DIRCADb).
+% 			\end{enumerate}
+% 		\end{block}
+% 		\vspace{-2mm}
+% 		\begin{figure}[h!]
+% 			\includegraphics[height=.4\textheight]{figures/dataset/ircad_dataset}
+% 			\vspace{-2mm}
+% 			\caption{Ảnh trực quan tập dữ liệu \textit{3D-IRCADb-01}.}
+% 		\end{figure}
+% 		\footnotesource{\url{https://www.ircad.fr/research/3d-ircadb-01/}}
+% 	\end{frame}
+	
+% 	\begin{frame}{Tập dữ liệu}{Tiền xử lý - Các bước tiền xử lý dữ liệu}
+% 	    \vspace{-1.5cm}
+% 		\begin{enumerate}
+% 			\item Lấy mẫu dữ liệu đưa về cùng kích thước thực mỗi voxel: 1mm(W)$\times$1mm(H)$\times$1mm(D).
+% 			\item Áp dụng ngưỡng lên dữ liệu.				
+% 			\item Chuẩn hóa dữ liệu về khoảng giá trị [0, 1].
+% 			\item Trích xuất thành phần gan (đối với bài toán mạch máu).
+% 			\item Chia dữ liệu thành các khối 3D có kích thước nhỏ hơn.
+% 			\item Tăng cường dữ liệu: xoay, biến dạng đàn hồi.
+% 		\end{enumerate}
+		
+%         \vspace{-0.5cm}
+% 	\end{frame}
+	
+% 	\begin{frame}{Tập dữ liệu}{Tiền xử lý - Áp dụng ngưỡng và chuẩn hóa dữ liệu}
+% 	    \vspace{-3mm}
+% 	    \begin{minipage}[t]{.52\textwidth}
+% 			\begin{figure}[h!]
+% 		     \includegraphics[scale=0.5]{figures/dataset/histogram_preprocess.pdf}
+% 			    \caption{Phân phối giá trị Hounsfield Unit của gan, mạch máu và các bộ phận khác của tập dữ liệu 3Dircadb.}
+% 		\end{figure}
+% 	    \end{minipage}\hspace*{2mm}%
+% 		\begin{minipage}[t]{.48\textwidth}
+% 			\begin{enumerate}
+% 			\setcounter{enumi}{1}
+% 			\vspace{0.4cm}
+% 			\item Áp dụng ngưỡng [min, max] lên dữ liệu.
+% 			\begin{align}
+%                 {P_{1x}} = \begin{cases} 
+%                     \mathrm{min} & \text{if}\ P_{1x} < min \\
+%                     \mathrm{max} & \text{if}\ P_{1x} > max \\
+%                     P_{1x}
+%                 \end{cases}
+%             \end{align}
+% 			\item Chuẩn hoá về khoảng giá trị [0, 1].
+% 			\begin{equation}
+% 			{P_2}_x=\dfrac{{P_1}_x - \mathrm{min}}{\mathrm{max} - \mathrm{min}}
+% 			\end{equation}
+% 		\end{enumerate}
+% 	    \end{minipage}
+	    
+% 	    \vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-3mm}\tiny *Ngưỡng phù hợp sau khi phân tích các tập dữ liệu trong khoảng [-100, 400]}
+%  	\end{frame}
+	
+% 	\begin{frame}{Tập dữ liệu}{Tiền xử lý - Trích xuất thành phần gan}
+% 	    \begin{figure}[h!]
+% 			\includegraphics[height=.7\textheight]{figures/dataset/extract_liver.pdf}
+% 			\vspace{-2mm}
+% 			\caption{Trích xuất thành phần gan trong khối ảnh CT.}
+% 		\end{figure}
+% 	\end{frame}
+	
+% 	\begin{frame}{Tập dữ liệu}{Tiền xử lý - Trực quan hóa quy trình tiền xử lý}
+% 	    \begin{figure}[h!]
+% 			\includegraphics[scale=0.45]{Presentation_template/figures/dataset/preprocess_stage.pdf}
+% 			\vspace{-2mm}
+% 			\caption{Trực quan hóa quy trình tiền xử lý.}
+% 		\end{figure}
+% 	\end{frame}
+
+% 	\begin{frame}{Tập dữ liệu}{Hậu xử lý}
+% 		\vspace{5mm}
+% 		\begin{block}{Hậu xử lý dữ liệu}
+% 		Giải thuật đánh nhãn vùng liên thông.
+% 		\end{block}
+% 		\begin{figure}[h!]
+% 		    \hspace{8mm}
+% 			\begin{subfigure}[b]{0.3\textwidth}
+% 				\includegraphics[height=.4\textheight]{figures/liver_post_processing_before}
+% 				\caption{}
+% 				\label{fig:post_processing_before}
+% 			\end{subfigure}
+% 			\begin{subfigure}[b]{0.3\textwidth}
+% 				\includegraphics[height=.4\textheight]{figures/liver_post_processing_after}
+% 				\caption{}
+% 				\label{fig:post_processing_after}
+% 			\end{subfigure}
+% 			\vspace{-3mm}
+% 			\caption{Loại bỏ các thành phần liên thông nhỏ. (\subref{fig:post_processing_before}) trước xử lý. (\subref{fig:post_processing_after}) sau xử lý.}
+% 		\end{figure}
+% 	\end{frame}
+% \subsection{Phương pháp đánh giá}
+% 	\begin{frame}{Phương pháp đánh giá}{Độ đo}
+% 	    \begin{minipage}[t]{.45\textwidth}
+% 			\begin{align}
+%         		\mathrm{Dice} &= \mathrm{\dfrac{2TP}{2TP + FN + FP}} \\
+%         		\mathrm{Recall} &= \mathrm{\dfrac{TP}{TP + FN}} \\
+%         		\mathrm{Precision} &= \mathrm{\dfrac{TP}{TP + FP}}
+%             \end{align}
+% 	    \end{minipage}\hspace*{2mm}%
+% 		\begin{minipage}[t]{.45\textwidth}
+% 		    \begin{align}
+% 		    \mathrm{VOE} &= 1 - \mathrm{\dfrac{TP}{TP + FN + FP}} \\
+% 			\mathrm{VD} &= \mathrm{\dfrac{FP - FN}{TP + FN}}
+% 			\end{align}
+% 	    \end{minipage}
+		
+% 		\vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-3mm}\tiny *Độ đo chính: Dice}
+% 	\end{frame}
+
+% \subsection{Thí nghiệm}
+%     \begin{frame}{Thí nghiệm mô hình đề xuất U2net3d*}{Thí nghiệm trên gan}
+% 	\begin{table}[H]
+%         \centering
+%         \begin{tabular}{c|c c c c c | c c}
+%         \Xhline{3\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{STT}} & \multicolumn{5}{c|}{\textbf{Thông số mô hình}} & \multicolumn{2}{c}{\textbf{Tập kiểm thử}} \\
+%             & \textbf{En1} & \textbf{En2} & \textbf{En3} & \textbf{En4} & \textbf{En5} & \textbf{Dice} & \textbf{Recall} \\ 
+%             \hline
+%             \multirow{4}{*}{1} & \textbf{2-Conv} & \textbf{RSU-3} & \textbf{RSU-2} & \textbf{RSU-1} &  & \textbf{96.15} & 96.48 \\
+%                                           & I:1  & I:32 & I:64 & I:128 & \\ 
+%                                           & M:32 & M:64 & M:128 & M:256 & \\
+%                                           & O:32 & O:64 & O:128 & O:256 & \\
+%             \hline
+%             \multirow{4}{*}{2} & \textbf{2-Conv} & \textbf{RSU-4} & \textbf{RSU-3} & \textbf{RSU-2} &  & 94.85 & 96.22 \\
+%                                           & I:1  & I:32 & I:64 & I:128 & \\ 
+%                                           & M:32 & M:64 & M:128 & M:256 & \\
+%                                           & O:32 & O:64 & O:128 & O:256 & \\
+%             \hline
+%             \multirow{4}{*}{3} & \textbf{2-Conv} & \textbf{RSU-4} & \textbf{RSU-3} & \textbf{RSU-2} &  & 95.83 & \textbf{96.56} \\
+%                                           & I:1  & I:24 & I:48 & I:96 & \\ 
+%                                           & M:24 & M:48 & M:96 & M:192 & \\
+%                                           & O:24 & O:48 & O:96 & O:192 & \\
+%             \hline
+    
+%         \Xhline{3\arrayrulewidth}
+%         \end{tabular}
+%         \caption{Thí nghiệm các siêu tham số mô hình U2net3d*.}
+%     \end{table}
+% 	\end{frame}
+	
+% 	\begin{frame}{Thí nghiệm mô hình đề xuất U2net3d*}{Thí nghiệm trên gan}
+% 	\begin{table}[H]
+%         \centering
+%         \begin{tabular}{c|c c c c c | c c}
+%         \Xhline{3\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{STT}} & \multicolumn{5}{c|}{\textbf{Thông số mô hình}} & \multicolumn{2}{c}{\textbf{Tập kiểm thử}} \\
+%             & \textbf{En1} & \textbf{En2} & \textbf{En3} & \textbf{En4} & \textbf{En5} & \textbf{Dice} & \textbf{Recall} \\ 
+%             \hline
+%             \multirow{4}{*}{4} & \textbf{2-Conv} & \textbf{RSU-4} & \textbf{RSU-3} & \textbf{RSU-2} &  \textbf{RSU-1}  & 95.28 & 95.82 \\
+%                                           & I:1  & I:16 & I:32 & I:64  & I:128 \\ 
+%                                           & M:16 & M:32 & M:64 & M:128 & M:256 \\
+%                                           & O:16 & O:32 & O:64 & O:128 & O:256 \\
+%             \hline
+%             \multirow{4}{*}{5} & \textbf{2-Conv} & \textbf{RSU-5} & \textbf{RSU-4} & \textbf{RSU-3} &  \textbf{RSU-2}  & 93.94 & 94.35 \\
+%                                           & I:1  & I:12 & I:24 & I:48  & I:96 \\ 
+%                                           & M:12 & M:24 & M:48 & M:96 & M:192 \\
+%                                           & O:12 & O:24 & O:48 & O:96 & O:192 \\
+%             \hline
+    
+%         \Xhline{3\arrayrulewidth}
+%         \end{tabular}
+%         \caption{Thí nghiệm các siêu tham số mô hình U2net3d*.}
+%     \end{table}
+% 	\end{frame}
+	
+%     \begin{frame}{Thí nghiệm mô hình đề xuất U2net3d*}{Thí nghiệm trên mạch máu}
+%     \vspace{3mm}
+% 	\begin{table}[H]
+%         \centering
+%         \begin{tabular}{c|c c c c|c c}
+%         \Xhline{3\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{STT}} & \multicolumn{4}{c|}{\textbf{Thông số mô hình}} & \multicolumn{2}{c}{\textbf{Tập kiểm thử}} \\
+%             & \textbf{En1} & \textbf{En2} & \textbf{En3} & \textbf{En4} & \textbf{Dice} & \textbf{Recall} \\ 
+%             \hline
+%             \multirow{4}{*}{1} & \textbf{RSU-4} & \textbf{RSU-3} & \textbf{RSU-2} & \textbf{RSU-1} & 58.50 & \textbf{75.12}\\
+%                                           & I:1  & I:32 & I:64 & I:128 \\ 
+%                                           & M:32 & M:32 & M:32 & M:32 \\
+%                                           & O:32 & O:64 & O:128 & O:256 \\
+%             \hline
+%             \multirow{4}{*}{2} & \textbf{RSU-4} & \textbf{RSU-3} & \textbf{RSU-2} & \textbf{RSU-1} & 61.14 & 68.86 \\
+%                                           & I:1  & I:32 & I:64 & I:128 \\ 
+%                                           & M:32 & M:64 & M:128 & M:256 \\
+%                                           & O:32 & O:64 & O:128 & O:256 \\
+%             \hline
+%             \multirow{4}{*}{3} & \textbf{RSU-4} & \textbf{RSU-3} & \textbf{RSU-2} & \textbf{RSU-1} & 61.73 & 70.78 \\
+%                                           & I:1  & I:32 & I:64 & I:128 \\ 
+%                                           & M:64 & M:64 & M:64 & M:64 \\
+%                                           & O:32 & O:64 & O:128 & O:256 \\
+%         \Xhline{3\arrayrulewidth}
+%         \end{tabular}
+%         \caption{Thí nghiệm các siêu tham số mô hình U2net3d*.}
+%     \end{table}
+% 	\end{frame}
+	
+% 	\begin{frame}{Thí nghiệm mô hình đề xuất U2net3d*}{Thí nghiệm trên mạch máu}
+% 	\vspace{3mm}
+% 	\begin{table}[H]
+%         \centering
+%         \begin{tabular}{c|c c c c|c c}
+%         \Xhline{3\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{STT}} & \multicolumn{4}{c|}{\textbf{Thông số mô hình}} & \multicolumn{2}{c}{\textbf{Tập kiểm thử}} \\
+%             & \textbf{En1} & \textbf{En2} & \textbf{En3} & \textbf{En4} & \textbf{Dice} & \textbf{Recall} \\ 
+%             \hline
+%             \multirow{4}{*}{4} & \textbf{RSU-2} & \textbf{RSU-2} & \textbf{RSU-2} & \textbf{RSU-2} & 60.84 & 67.84 \\
+%                                           & I:1  & I:32 & I:64 & I:128  \\ 
+%                                           & M:32 & M:64 & M:128 & M:256 \\
+%                                           & O:32 & O:64 & O:128 & O:256 \\
+%             \hline
+%             \multirow{4}{*}{5} & \textbf{2-Conv} & \textbf{RSU-3} & \textbf{RSU-2} & \textbf{RSU-1} & \textbf{63.08} & 70.31 \\
+%                                           & I:1  & I:32 & I:64 & I:128  \\ 
+%                                           & M:32 & M:64 & M:128 & M:256 \\
+%                                           & O:32 & O:64 & O:128 & O:256 \\
+%             \hline
+%             \multirow{4}{*}{6} & \textbf{2-Conv} & \textbf{RSU-3} & \textbf{RSU-2} & \textbf{RSU-1} & 62.12 & 64.36\\
+%                                           & I:1  & I:64  & I:128 & I:256 \\ 
+%                                           & M:64 & M:128 & M:256 & M:512 \\
+%                                           & O:64 & O:128 & O:256 & O:512 \\
+%         \Xhline{3\arrayrulewidth}
+%         \end{tabular}
+%         \caption{Thí nghiệm các siêu tham số mô hình U2net3d*.}
+%     \end{table}
+% 	\end{frame}
+	
+% \subsection{Đánh giá kết quả}
+%     \begin{frame}{Đánh giá kết quả}{So sánh với các công trình trước}
+%         \begin{table}[H]
+%         \renewcommand{\arraystretch}{1.1}
+%         \centering
+%         \begin{tabular}{c l c c c}
+%             \Xhline{2\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{STT}} & \multirow{2}{*}{\textbf{Mô hình}} & \multicolumn{3}{c}{\textbf{Tập kiểm tra}} \\ \cline{3-5}
+%             & &  \textbf{Dice} & \textbf{Recall} & \textbf{Precision} \\ 
+%             \Xhline{2\arrayrulewidth}
+%             1   & Unet2D\small[\textcolor{blue}{1}]       & 41.17 & 60.05 & 31.32\\
+%             2   & Unet3D\small[\textcolor{blue}{2}]       & 56.29 & 44.27 & \textbf{73.97} \\
+%             3   & CNN3D\small[\textcolor{blue}{3}]        & 54.26 & 54.98 & 59.16 \\
+%             4   & U2net3D*     & \textbf{60.75} & \textbf{66.87} & 59.73 \\
+%             \Xhline{2\arrayrulewidth}
+%         \end{tabular}
+%         \caption{Kết quả phân đoạn mạch máu của các mô hình (\%).}
+%         \end{table}
+        
+%     \vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-6mm}\scriptsize [\textcolor{blue}{1}] O. Ronneberger, P. Fischer, and T. Brox, “U-net: Convolutional networks for biomedical image segmentation,” MICCAI (2015)}
+        
+%     \vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-6mm}\scriptsize [\textcolor{blue}{2}] L.H.Trong, N.V.Hung. “Phát hiện và xây dựng hệ thống mạch máu của gan từ ảnh chụp CT”, LVTN (2019)}
+    
+%     \vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-6mm}\scriptsize [\textcolor{blue}{3}] Qi Dou, H.Chen. “3D Deeply Supervised Network for Automatic Liver Segmentation from CT Volumes”, CoRR (2016)}
+%     \end{frame}
+    
+%     \begin{frame}{Đánh giá kết quả}{Đánh giá kết quả tập kiểm tra}
+%         \begin{table}[H]
+%         \renewcommand{\arraystretch}{1.1}
+%         \centering
+%         \begin{tabular}{c l c c c}
+%             \Xhline{2\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{STT}} & \multirow{2}{*}{\textbf{Bệnh nhân}} & \multicolumn{3}{c}{\textbf{Tập kiểm tra}} \\ \cline{3-5}
+%             & &  \textbf{Dice} & \textbf{Recall} & \textbf{Precision} \\ 
+%             \Xhline{2\arrayrulewidth}
+%             1   & Bệnh nhân số 1 & 50.73 & \textbf{82.85} & 36.55\\
+%             2   & Bệnh nhân số 6 & 62.52 & 65.66 & 59.76 \\
+%             3   & Bệnh nhân số 11 & \textbf{68.79} & 64.09 & \textbf{74.23} \\
+%             \Xhline{2\arrayrulewidth}
+%         \end{tabular}
+%         \caption{Kết quả phân đoạn mạch máu chi tiết các bệnh nhân trong tập kiểm tra(\%).}
+%         \end{table}
+%     \end{frame}
+    
+%     \begin{frame}{Đánh giá kết quả}{}
+%         \vspace{-0.3cm}
+%         \begin{figure}[H]
+% 			\centering
+% 		    \includegraphics[height=0.9\textheight]{Presentation_template/figures/dataset/3d_vessel.pdf}
+% 		\end{figure}
+%     \end{frame}
+    
+%     \begin{frame}{Đánh giá kết quả}{So sánh với các công trình trước}
+%         \begin{table}[H]
+%         \centering
+%         \begin{tabular}{c c c c c c}
+%         \Xhline{3\arrayrulewidth}
+%         \multirow{2}{*}{\textbf{STT}} & \multirow{2}{*}{\textbf{Mô hình}} & \multicolumn{4}{c}{\textbf{Tập kiểm tra}} \\ \cline{3-6} 
+%         & &  \textbf{Dice} & \textbf{Recall} & \textbf{VOE} & \textbf{VD}\\ \hline
+%         1 & Unet3D\small[\textcolor{blue}{1}]   & 91.82   & 91.54     & 14.53  & 6.37  \\
+%         2 & CNN3D\small[\textcolor{blue}{2}]    & 95.17   & 94.42     & 9.11   & -1.64  \\
+%         3 & TLUnet3D\small[\textcolor{blue}{3}]        & 95.70   & \textbf{95.40}     & 8.16   & \textbf{-0.67}    \\
+%         4 & U2net3D* & \textbf{95.83}  & 95.29 & \textbf{7.9}  & -1.21 \\ 
+%         \Xhline{3\arrayrulewidth}
+%         \end{tabular}
+%         \caption{Kết quả phân đoạn gan của các mô hình (\%).}
+%         \end{table}
+        
+%         \vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-6mm}\scriptsize [\textcolor{blue}{1}] L.H.Trong, N.V.Hung. “Phát hiện và xây dựng hệ thống mạch máu của gan từ ảnh chụp CT”, LVTN (2019)}
+        
+%         \vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-6mm}\scriptsize [\textcolor{blue}{2}] Qi Dou, H.Chen. “3D Deeply Supervised Network for Automatic Liver Segmentation from CT Volumes”, CoRR (2016)}
+        
+%         \vspace{-8mm}\let\thefootnote\relax\footnote{\hspace{-6mm}\scriptsize [\textcolor{blue}{3}] N.Q.Ha, T.Q.Phap, M.D.Tu. “Xây dựng mô hình gan từ ảnh chụp CT”, LVTN (2019)}
+%     \end{frame}
+    
+%     \begin{frame}{Đánh giá kết quả}{Kết quả trực quan}
+%         \begin{figure}[H]
+%             \centering
+%             \includegraphics[width=\textwidth]{Presentation_template/figures/liver-result-legend.jpg}
+%             \caption{Kết quả dự đoán một mẫu dữ liệu trên tập Sliver07.}
+%         \end{figure}
+%     \end{frame}
+    
+% \section{Hệ thống làm nhãn Data Annotation Tool}
+
+% \subsection{Mục tiêu hệ thống làm nhãn DAT}
+%     \begin{frame}{Mục tiêu hệ thống làm nhãn DAT}{}
+% 		\begin{block}{Động lực}
+% 			\begin{enumerate}
+% 				\item Bài toán phân đoạn ảnh y khoa dùng mạng học sâu cần lượng lớn dữ liệu. 
+% 				\item Việc gán nhãn dữ liệu ảnh y khoa cần một công cụ hỗ trợ hợp lý.
+% 			\end{enumerate}
+% 		\end{block}
+		
+% 		\begin{block}{Mục tiêu}
+% 			\begin{enumerate}
+% 				\item Cung cấp hệ thống DAT đáp ứng nhu cầu làm nhãn ảnh y khoa phục vụ việc huấn luyện mạng học sâu. 
+% 			\end{enumerate}
+% 		\end{block}
+% 	\end{frame}	
+    
+% \subsection{Kiến trúc hệ thống}
+%     \begin{frame}{Kiến trúc hệ thống}{Data Annotation Tool}
+% 		\begin{figure}
+% 			\centering
+% 			\includegraphics[width=0.9\linewidth]{Presentation_template/figures/DAT/mvt.pdf}
+% 			\caption{Tổng quan hệ thống DAT}
+% 		\end{figure}
+% 	\end{frame}
+
+% \subsection{Giao diện ứng dụng}
+%     \begin{frame}{Giao diện ứng dụng}{Data Annotation Tool}
+% 		\begin{figure}
+% 			\centering
+% 			\includegraphics[width=0.78\linewidth]{Presentation_template/figures/DAT/dat_slide_user_ui.png}
+% 			\caption{Giao diện làm nhãn}
+% 		\end{figure}
+% 	\end{frame}
+
+% \subsection{Làm nhãn với giải thuật tăng trưởng vùng}
+
+% \begin{frame}{Giải thuật tăng trưởng vùng}{Giới thiệu giải thuật}
+% % 		\begin{block}{Định nghĩa}
+% % 		\indent Là một kỹ thuật tuần tự dựa trên vùng để phân đoạn hình ảnh bằng cách tập hợp các pixel thành các vùng lớn hơn dựa trên các pixel hạt giống được xác định trước, tiêu chí phát triển và điều kiện dừng.
+% % 		\end{block}
+		
+% 		\begin{figure}[h!]
+%     	     \includegraphics[width=0.98\textwidth]{Presentation_template/figures/DAT/dat_slide_region_growing_latest.pdf}
+% 				\caption{Minh họa giải thuật tăng trưởng vùng}
+% 		\end{figure}
+% \end{frame}
+
+% \begin{frame}{Giải thuật tăng trưởng vùng}{Ứng dụng giải thuật vào công cụ làm nhãn}
+% 		\begin{block}{Ứng dụng vào thao tác làm nhãn}
+% 			\begin{enumerate}
+% 				\item Lấy ngưỡng giá trị Hounsfield. %để làm rõ đối tượng cần làm nhãn.
+% 				\item Chọn điểm hạt giống.
+% 				\item Tăng trưởng vùng theo mức xám. 
+% 			\end{enumerate}
+% 		\end{block}
+		
+% 		\begin{block}{Tiêu chí phát triển và điều kiện dừng}
+% 		    \begin{enumerate}
+% 		  %  \item Đặt một giá trị alpha có thể điều chỉnh, với mỗi pixel lân cận, nếu độ chênh lệch mức xám không vượt quá alpha thì được thêm vào vùng lan. 
+% 				\item Độ chênh lệch mức xám không vượt quá alpha thì pixel được thêm vào vùng lan. 
+% 				\item Độ chêch lệnh mức xám vượt quá alpha hoặc vị trí pixel ra ngoài hình ảnh thì dừng lại.
+% 			\end{enumerate}
+% 		\end{block}
+		
+% \end{frame}
+
+% \begin{frame}{Làm nhãn với giải thuật tăng trưởng vùng}{Làm nhãn bán tự động}
+% 		\begin{figure}[h!]
+% 				\includegraphics[width=0.8\textwidth]{Presentation_template/figures/DAT/dat_ui_labeling_region_growing.png}
+% 				\caption{Tăng trưởng vùng theo mức xám trên ảnh DICOM}
+% 		\end{figure}
+% \end{frame}
+
+% \subsection{Tích hợp dự đoán AI}
+
+% \begin{frame}{Tích hợp dự đoán AI}{Lãm nhãn bán tự động}
+% 		\begin{figure}[h!]
+% 				\includegraphics[width=0.8\textwidth]{Presentation_template/figures/DAT/dat_slide_labeling_with_ai.png}
+% 				\caption{Dự đoán AI hỗ trợ làm nhãn ảnh DICOM}
+% 		\end{figure}
+% \end{frame}
+	
+% \subsection{Phần thừa kế và phần bổ sung}
+% 	\begin{frame}{Phần thừa kế và phần bổ sung}{}
+% 		\begin{block}{Tính năng thừa kế}
+% 			\begin{enumerate}
+% 			 %   \item Đăng nhập và xác thực người dùng.
+% 			 %   \item Tải lên tập dữ liệu làm nhãn.
+% 				% \item Cấu hình tập dữ liệu ảnh y khoa và chỉ định người dùng làm nhãn.
+% 				% \item Hiện và ẩn nhãn.
+% 				% \item Hiển thị đường biên.
+% 				\item Lấy ngưỡng giá trị Hounsfield. %để làm rõ đối tượng cần làm nhãn.
+% 				\item Vẽ bằng bút.
+% 				\item Xóa bằng bút.
+% 				\item Chọn vùng ROI (region of interest).
+% 			\end{enumerate}
+% 		\end{block}
+		
+% 		\begin{block}{Tính năng cải thiện và bổ sung}
+% 			\begin{enumerate}
+% 				\item Cải thiện giải thuật tăng trưởng vùng theo mức xám.
+% 				\item Tích hợp dự đoán AI.
+% 				% \item Quay về (undo).
+% 				% \item Xóa toàn bộ nhãn.
+% 				\item Vẽ nhãn tự do theo đường biên. 
+% 				% \item Lưu nhãn đã làm.
+% 				% \item Tải lên nhãn đã lưu.
+% 				% \item Hỗ trợ ngôn ngữ tiếng Việt và tiếng Anh.
+% 				% \item Phóng to, thu nhỏ, kéo thả hình ảnh khi làm nhãn.
+% 				\item Đồng bộ nhãn giữa 4 thì.
+% 				% \item Thanh cuộn để chuyển giữa các lát cắt trong quá trình làm nhãn.
+% 			\end{enumerate}
+% 		\end{block}
+% 	\end{frame}	
+	
+% % 	\begin{frame}{Phần thừa kế và phần bổ sung}{}
+% % 		\begin{block}{Tính năng cải thiện và bổ sung}
+% % 			\begin{enumerate}
+% % 				\item Cải thiện giải thuật tăng trưởng vùng theo mức xám.
+% % 				\item Tích hợp dự đoán AI.
+% % 				\item Quay về (undo).
+% % 				\item Xóa toàn bộ nhãn.
+% % 				\item Vẽ nhãn tự do theo đường biên. 
+% % 				\item Lưu nhãn đã làm.
+% % 				\item Tải lên nhãn đã lưu.
+% % 				\item Hỗ trợ ngôn ngữ tiếng Việt và tiếng Anh.
+% % 				\item Phóng to, thu nhỏ, kéo thả hình ảnh khi làm nhãn.
+% % 				\item Đồng bộ nhãn giữa 4 thì (thì không thuốc, thì động mạch, thì tĩnh mạch, thì muộn).
+% % 				\item Thanh cuộn để chuyển giữa các lát cắt trong quá trình làm nhãn.
+% % 			\end{enumerate}
+% % 		\end{block}
+% % 	\end{frame}	
+	
+% \section{Tổng kết}
+% \subsection{Kết quả đạt được}
+% 	\begin{frame}{Tổng kết}{Kết quả đạt được}
+% 		\begin{block}{Kết quả đạt được}
+% 			\begin{enumerate}
+% 			    \item Mô hình phân đoạn mạch máu đề xuất đã cải thiện với hệ số Dice (\textbf{60.75\%}) so với các mô trình trước đó.
+% 				\item Xây dựng thành công mô hình phân đoạn gan với độ chính xác tương đối tốt.
+%                 \item Kế thừa và phát triển hệ thống làm nhãn ảnh y khoa.
+% 			\end{enumerate}
+% 		\end{block}
+% 		\pause
+% 		\begin{block}{Các đóng góp}
+% 			\begin{enumerate}
+% 				\item Việc áp dụng ý tưởng của mô hình trong lĩnh vực phát hiện đối tượng nổi bật nhất trong bài toán ảnh y khoa đạt được sự cải thiện.
+% 				\item Phát triển thêm các tính năng hệ thống làm nhãn.
+% 			\end{enumerate}
+% 		\end{block}
+% 	\end{frame}
+
+% \subsection{Hướng phát triển}
+% 	\begin{frame}{Tổng kết}{Hướng phát triển}
+% 		\begin{block}{Hướng phát triển}
+% 			\begin{enumerate}
+% 				\item Tích hợp phân đoạn đồng thời vừa gan vừa mạch máu cho toàn bộ ảnh CT.
+% 				\item Phân đoạn nhiều cơ quan nội tạng khác nhau.
+% 				\item Trực quan hóa dữ liệu dưới dạng mô hình 3D.
+% 				\item Thêm tính năng tách riêng và thao tác độc lập trên từng phần nhãn.
+% 				\item Cải thiện phần tải và hiển thị ảnh DICOM.
+% 			\end{enumerate}
+% 		\end{block}
+% 	\end{frame}
+	
+% % \subsection{Kế hoạch luận văn}
+% % 	\begin{frame}{Tổng kết}{Kế hoạch thực hiện luận văn}
+% % 		\vspace{-12mm}
+% % 		\begin{figure}[h!]
+% % 			\centering
+% % 			\setlength{\belowcaptionskip}{-1cm}
+% % 			\resizebox{\columnwidth}{!}{
+% % 				\begin{ganttchart}[
+% % 						canvas/.append style={fill=none, draw=black!15, line width=.75pt},
+% % 						hgrid style/.style={draw=black!15, line width=.75pt},
+% % 						vgrid={*1{draw=black!15, line width=.5pt}},
+% % 						x unit=.55cm,
+% % 						y unit title=1.2cm,
+% % 						y unit chart=.65cm,
+% % 						title/.style={draw=none, fill=none},
+% % 						title label font=\bfseries\footnotesize,
+% % 						title label node/.append style={below=7pt},
+% % 						include title in canvas=false,
+% % 						bar label font=\mdseries\small\color{black!70},
+% % 						bar label node/.append style={left=.1cm},
+% % 						bar/.append style={draw=none, fill=black!30},
+% % 						bar height=.7,
+% % 						group/.append style={draw=none, fill=black!60},
+% % 						% group incomplete/.append style={fill=groupblue},
+% % 						group left shift=0,
+% % 						group right shift=0,
+% % 						group height=.3,
+% % 						group peaks tip position=0,
+% % 						group label node/.append style={left=.1cm},
+% % 					]{1}{15}
+% % 					\gantttitle[
+% % 						title label node/.append style={below left=4pt and 3pt}
+% % 					]{TUẦN:}{0}
+% % 					\gantttitlelist{1,...,15}{1} \\
+% % 					\Dganttbar{\textbf{1.} Viết báo cáo Luận văn}{Hùng, Trọng}{1}{15}\\
+% % 					\Dganttbar{\textbf{2.} Tiền xử lý tập dữ liệu}{\hspace{12mm}Hùng, Trọng}{1}{1}\\
+% % 					\Dganttbar{\textbf{3.} Huấn luyện mô hình U-Net}{Hùng}{2}{5}\\
+% % 					\Dganttbar{\textbf{4.} Huấn luyện mô hình DeepVesselNet}{Trọng}{2}{5}\\
+% % 					\Dganttbar{\textbf{5.} Tổng kết, đánh giá, đề xuất mô hình}{\hspace{7mm}Hùng, Trọng}{6}{7}\\
+% % 					\Dganttbar{\textbf{6.} Huấn luyện, đánh giá mô hình}{Trọng}{8}{12}\\
+% % 					\Dganttbar{\textbf{7.} Trực quan hoá kết quả thí nghiệm}{Hùng}{8}{9}\\
+% % 					\Dganttbar{\textbf{8.} Hậu xử lý kết quả phân đoạn}{Hùng}{10}{12}\\
+% % 					\Dganttbar{\textbf{9.} Xây dựng bài thuyết trình}{\hspace{7mm}Hùng, Trọng}{13}{14}\\
+% % 					\Dganttbar{\textbf{10.} Chuẩn bị poster}{\hspace{13mm}Hùng, Trọng}{15}{15}
+% % 				\end{ganttchart}
+% % 			}
+% % 			\caption{Kế hoạch thực hiện luận văn.}
+% % 			\label{fig:ke_hoach_thuc_hien_luan_van}
+% % 		\end{figure}
+% % 	\end{frame}
+
+% \setcounter{section}{0}
+% \appendix
+% 	\begin{frame}[noframenumbering]
+% 		\begin{minipage}[c][\textheight][c]{\textwidth}%
+% 			\centering
+% 			\LARGE
+% 			\textcolor{blue}{\textbf{Cảm ơn thầy cô và các bạn đã lắng nghe!}}
+% 		\end{minipage}%
+% 	\end{frame}
+	
+% 	\begin{frame}[noframenumbering]{Thí nghiệm mô hình Unet3D}{Thí nghiệm trên gan}
+%         \begin{table}[H]
+%             \centering
+%             \resizebox{\columnwidth}{!}{
+%             \begin{tabular}{c|c|c|c|c|c|c}
+%             \Xhline{3\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{STT}} & \multirow{2}{*}{\textbf{Thí nghiệm}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Kích thước \\ dữ liệu\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Độ sâu \\ mô hình \end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Tăng cường\\ dữ liệu\end{tabular}}} & \multicolumn{2}{c}{\textbf{Tập kiểm thử}} \\ \cline{6-7} 
+%             & & &  & & \textbf{Dice}  & \textbf{Recall}  \\ \hline
+%             1 & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Kích thước \\ dữ liệu\end{tabular}} & $64^3$ & \multirow{4}{*}{3} & \multirow{6}{*}{Không} & 71.69  & 88.66   \\ \cline{1-1} \cline{3-3} \cline{6-7} 
+%             2 & & $96^3$ & &                                                                                        & 83.49            & 89.93            \\ \cline{1-1} \cline{3-3} \cline{6-7} 
+%             3                             &                                                                                & $128^3$                                                                                     &                                                                                               &                                                                                        & 80.12            & 85.81            \\ \cline{1-1} \cline{3-3} \cline{6-7} 
+%             4                             &                                                                                & $160^3$                                                                                     &                                                                                               &                                                                                        & 80.94            & 87.81            \\ \cline{1-4} \cline{6-7} 
+%             5                             & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Độ sâu \\ mô hình\end{tabular}}     & \multirow{3}{*}{$96^3$}                                                                     & 4                                                                                             &                                                                                        & 88.17            & 90.49            \\ \cline{1-1} \cline{4-4} \cline{6-7} 
+%             6 & &  & 5 &                                                                                        & 88.09            & \textbf{94.20}   \\ \cline{1-2} \cline{4-7} 
+%             7                             & \begin{tabular}[c]{@{}l@{}}Tăng cường \\ dữ liệu\end{tabular}                  &                                                                                         & 4                                                                                             & Có                                                                                     & \textbf{90.67}   & 91.52            \\ 
+%             \Xhline{3\arrayrulewidth}
+%             \end{tabular}}
+%             \caption*{Kết quả thí nghiệm mô hình Unet3D trên gan.}
+%         \end{table}
+
+% 	\end{frame}
+	
+%     \begin{frame}[noframenumbering]{Thí nghiệm mô hình CNN3D}{Thí nghiệm trên gan}
+%         \begin{table}[H]
+%             \renewcommand{\arraystretch}{1.2}
+%             \centering
+%             \begin{tabular}{c|c|c|c|c}
+%                 \Xhline{3\arrayrulewidth}
+%                 \multirow{2}{*}{\textbf{Thí nghiệm}} & \multicolumn{4}{c}{\textbf{Tập kiểm tra}}\\
+%                 \cline{2-5} 
+%                 & \textbf{Dice} (\%) & \textbf{Recall} (\%) & \textbf{VOE} (\%) & \textbf{VD} (\%) \\ 
+%                 \hline
+%                 CNN 3D          & 94.61              & 94.40                & 10.11    & \textbf{-0.47}\\ 
+%                 \hline
+%                 CNN 3D + hậu xử lý  & \textbf{95.17}   & \textbf{94.42} & \textbf{9.11}   & -1.64       \\ 
+%                 \Xhline{3\arrayrulewidth}
+%             \end{tabular}
+%             \caption*{Kết quả thí nghiệm mô hình CNN3D trên gan.}
+%         \end{table}
+%     \end{frame}
+    
+%     \begin{frame}[noframenumbering]{Thí nghiệm mô hình U2net3D*}{Thí nghiệm trên gan}
+%         \begin{table}[H]
+%             \renewcommand{\arraystretch}{1.1}
+%             \centering
+%             \begin{tabular}{c|c|c|c|c}
+%             \Xhline{3\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{Thí nghiệm}} & \multicolumn{4}{c}{\textbf{Tập kiểm tra}}                             \\ \cline{2-5} 
+%             & \textbf{Dice} (\%) & \textbf{Recall} (\%) & \textbf{VOE} (\%) & \textbf{VD} (\%) \\ \hline
+%             U2net3D*      & 95.28     & 95.29     & 8.92     & \textbf{-0.04}    \\ \hline
+%             U2net3D* + hậu xử lý & \textbf{95.83}       & 95.29     & \textbf{7.9}   & -1.21       \\ 
+%             \Xhline{3\arrayrulewidth}
+%             \end{tabular}
+%             \caption*{Kết quả thí nghiệm mô hình U2net3D* trên gan.}
+%         \end{table}
+%     \end{frame}
+	
+% 	\begin{frame}[noframenumbering]{Phân tích tập dữ liệu}
+% 	    \vspace{-0.35cm}
+% 	    \begin{figure}[H]
+%         	\begin{center}
+%         		\includegraphics[scale=0.26]{Presentation_template/figures/dataset/hu_dist.png}
+%         % 		\caption{Phân bố giá trị HU từng bệnh nhân.}
+%         	\end{center}
+%         	\vspace{-0.3cm}
+%         	\begin{center}
+%         		\includegraphics[scale=0.35]{Presentation_template/figures/dataset/compare_2patient.png}
+%         % 		\caption{So sánh phân bố HU của 2 bệnh nhân số 8 và số 9.}
+%         	\end{center}
+%         \end{figure}
+% 	\end{frame}
+	
+% 	\begin{frame}[noframenumbering]{Chuẩn bị dữ liệu huấn luyện}
+% 	    \begin{table}[H]
+%             \centering
+%             \begin{tabular}{|c|l|l|l|l|c|}
+%             \hline
+%             \multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{STT}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{Tập}}} & \multicolumn{3}{c|}{\textbf{Phân phối giá trị trung bình HU}}       & \multirow{2}{*}{\textbf{Tổng}} \\ \cline{3-5}
+%             \multicolumn{1}{|c|}{}                     & \multicolumn{1}{c|}{}                     & \textless{}125 & {[}125 , 150{]}        & \textgreater 150 &                       \\ \hline
+%             0 & Huấn luyện   & 5, 16, 9, 18, 20  & 2, 3, 7, 12, 13, 14, 15 & 8, 10    & 14                    \\ \hline
+%             1 & Kiểm thử     & 4             & 17                     & 19          & 3                     \\ \hline
+%             2 & Kiểm tra     & 6             & 11                     & 1           & 3                     \\ \hline
+%             \end{tabular}
+%             \caption*{\textcolor{blue}{\textbf{Bảng B.1:}}Bảng phân chia các bệnh nhân thành các tập dữ liệu cho mạch máu.}
+%         \end{table}
+% 	\end{frame}
+	
+% 	\begin{frame}[noframenumbering]{Phân tích tập dữ liệu}
+% 	    \vspace{-0.3cm}
+% 	    \begin{figure}[H]
+%     	    \centering
+%         	\includegraphics[scale=0.7]{Presentation_template/figures/dataset/test_hist.pdf}
+%         	\caption*{\textcolor{blue}{\textbf{Hình A.1:}} Phân bố HU của từng bệnh nhân trên tập kiểm tra.}
+%         \end{figure}
+% 	\end{frame}
+	
+% 	\begin{frame}[noframenumbering]{Hàm mục tiêu - Focal Loss}
+% 	    \vspace{-0.8cm}
+%         \begin{figure}[H]
+%             \centering
+%             \includegraphics[width=10cm]{Presentation_template/figures/focal.pdf}
+%             \caption*{\textcolor{blue}{\textbf{Hình A.1:}}Sự ảnh hưởng của trọng số $\gamma$ đối với hàm focal loss $\mathrm{FL(q)=-(1-q)^\gamma \mathrm{log}(q)}$ }
+%         \end{figure}
+%         \footnotesource{Tsung{-}Yi Lin, Priya Goyal, Ross B. Girshick, Kaiming He, Piotr Doll ``Focal Loss for Dense Object Detection'', 2017} 
+% 	\end{frame}    
+	
+% 	\begin{frame}[noframenumbering]{Thí nghiệm mô hình Unet3D - mạch máu}
+% 	    \begin{table}[H]
+%             \centering
+%             \begin{tabular}{c|c|c|c|c}
+%             \Xhline{3\arrayrulewidth}
+%             \multirow{2}{*}{\textbf{Mô hình}} & \multirow{2}{*}{\textbf{Độ sâu}} & \multicolumn{2}{c|}{\textbf{Tập kiểm tra}} & \multirow{2}{*}{\textbf{Số lượng tham số}} \\ 
+%             \cline{3-4} 
+%             &       &\textbf{Dice}       & \textbf{Recall}    &                 \\ \hline
+%             Unet3D  & 3 & 51.58               & 51.33              & 5.420.737       \\ \hline
+%             Unet3D  & 4 & \textbf{55.33}      & 59.06              & 22.399.425      \\ \hline
+%             Unet3D  & 5 & 36.04               & \textbf{65.13}     & 90.304.449      \\
+%             \Xhline{3\arrayrulewidth}
+%             \end{tabular}
+%             \end{table}
+%             \vspace{-0.2cm}
+%             \begin{table}[H]
+%             \centering
+%             \begin{tabular}{c c c c c c}
+%                 \Xhline{3\arrayrulewidth}
+%                 \multirow{2}{*}{\textbf{Hàm lỗi}} & \multicolumn{2}{c}{\textbf{Siêu tham số}} & \multicolumn{2}{c}{\textbf{Tập kiểm thử}} \\ \cline{2-5}
+%                  & \textbf{gamma} & \textbf{alpha} & \textbf{Dice} & \textbf{Recall} \\
+%                 \hline
+%                 BCE Loss   & \_  & \_  & 54.17 & 42.66 \\
+%                 \hline
+%                 Focal Loss & 1.0 & 0.6 & 52.59 & 45.19\\
+%                 Focal Loss & 1.0 & 0.7 & 50.98 & 47.96\\
+%                 Focal Loss & 1.0 & 0.8 & 53.98 & 48.11\\
+%                 Focal Loss & 1.5 & 0.7 & 53.05 & 49.43\\
+%                 Focal Loss & 1.5 & 0.8 & 53.23 & 50.18\\
+%                 Focal Loss & 2.0 & 0.7 & 54.16 & 54.07\\
+%                 Focal Loss & 2.0 & 0.8 & \textbf{55.33}  & 59.06\\
+%                 Focal Loss & 3.0 & 0.8 & 50.12 & \textbf{59.10}\\
+%                 \Xhline{3\arrayrulewidth}
+%                 \end{tabular}
+%         \end{table}
+% 	\end{frame}
+	
+% 	\begin{frame}[noframenumbering]
+% 	    \begin{table}[H]
+%             \centering
+%             \begin{tabular}{|c|c|c|c|}
+%             \hline
+%             \textbf{STT} & \textbf{Giới tính} & \textbf{Kích thước voxel (mm)} & \textbf{Kích thước ảnh ban đầu} \\ \hline
+%             1   & Nữ  & 0.57 - 0.57 - 1.6  & 512 - 512 - 129 \\ \hline
+%             2   & Nam & 0.62 - 0.62 - 1.25 & 512 - 512 - 200 \\ \hline
+%             ... &     &                    &                 \\ \hline
+%             20  & Nữ  & 0.81 - 0.81 - 2.0  & 512 - 512 - 225 \\ \hline
+%             \end{tabular}
+%             \caption{Thông tin kích thước không gian ban đầu của mỗi bộ ảnh tập dữ liệu 3DIRCAD}
+%         \end{table}
+% 	\end{frame}
+	
+% 	\begin{frame}[noframenumbering]
+% 		\vspace{7mm}
+% 		\begin{figure}[h!]
+% 			\input{figures/gaussian}
+% 			\caption*{\textcolor{blue}{\textbf{Hình A.1:}} Tỷ lệ diện tích phân phối Gauss theo độ lệch chuẩn.}
+% 		\end{figure}
+% 	\end{frame}
+	
+% 	\begin{frame}[noframenumbering]
+%         \begin{block}{Thông tin mạch máu gan*}
+% 			\begin{itemize}
+% 				\item \textbf{Tĩnh mạch cửa} là mạch máu có đường kính lớn nhất trong cơ quan gan.
+% 				\item Đường kính tĩnh mạch cửa trong khoảng \textbf{15 -- 18mm}.
+% 			\end{itemize}
+% 		\end{block}
+% 	    \vspace{-10mm}\let\thefootnote\relax\footnote{\hspace{-3mm}\tiny *Nguồn:~A. M. Covey, L. A. Brody, G. I. Getrajdman, C. T. Sofocleous, and K. T. Brown, ``Incidence, patterns, and clinical relevance of variant portal vein anatomy,'' American Journal of Roentgenology, vol. 183, no. 4, pp. 1055–1064, 2004.}
+%     \end{frame}
+ \end{document}

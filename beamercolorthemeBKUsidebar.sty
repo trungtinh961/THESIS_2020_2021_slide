@@ -1,0 +1,50 @@
+% This is the color theme file of the BKU sidebar theme.
+% Copyright (c) 2019/06/20 by Nguyen Van Hung <nvhung1401@gmail.com>m>.
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthemeBKUsidebar}[2017/06/01 v1.0.0 The BKU Sidebar Beamer Theme]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theme options and definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% theme options
+\DeclareOptionBeamer{lightheaderbg}{\def\beamer@lightheaderbg{true}}
+\ProcessOptionsBeamer
+
+%%% theme definitions
+% noting
+
+% end of theme options and definitions
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%beamer specific options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mode<presentation>% refers to the first four modes (beamer,handout,second and trans). That is, to all modes except the article mode
+{
+%%% define color
+	\definecolor{beamer@barcolor}{RGB}{215,215,215}            % light black
+	\definecolor{beamer@sidebarcolor}{RGB}{240,240,240}        % light black
+	\definecolor{beamer@headercolor}{RGB}{3,45,145}            % dark blue
+	\definecolor{beamer@lightheadercolor}{RGB}{255,255,255}    % white
+	\definecolor{beamer@progressbarcolor}{RGB}{70,170,240}     % light blue
+	\definecolor{beamer@structurecolor}{RGB}{0,0,200}          % blue
+	\definecolor{beamer@normaltextcolor}{RGB}{0,0,0}           % black
+%%% set color
+	\setbeamercolor{structure}{fg=beamer@structurecolor}
+	\setbeamercolor{normal text}{fg=beamer@normaltextcolor}
+	\setbeamercolor{BKUsidebar}{fg=beamer@barcolor}
+	\setbeamercolor{sidebar}{bg=beamer@sidebarcolor}
+	\setbeamercolor{author in sidebar}{fg=beamer@normaltextcolor}
+	\usecolortheme{rose,sidebartab}
+	\ifx\beamer@lightheaderbg\undefined% use darkheadercolor
+		\setbeamercolor{frametitle}{fg=beamer@lightheadercolor,bg=beamer@structurecolor}
+	\fi
+}
+
+%end of beamer specific options
+
+\mode<all>

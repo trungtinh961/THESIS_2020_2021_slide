@@ -1,0 +1,280 @@
+% This is the inner theme file of the BKU sidebar theme.
+% Copyright (c) 2019/06/20 by Nguyen Van Hung <nvhung1401@gmail.com>m>.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemeBKUsidebar}[2017/06/01 v1.0.0 The BKU Sidebar Beamer Theme]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load required packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{calc}
+\RequirePackage{listings}
+\RequirePackage{chngcntr}
+\RequirePackage{hyperref}
+
+% end of load required packages
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theme options and definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% theme options
+\DeclareOptionBeamer{left}{\def\beamer@sidebarside{left}}
+\DeclareOptionBeamer{right}{\def\beamer@sidebarside{right}}
+\DeclareOptionBeamer{transparent}{\def\beamer@transparent{true}}
+\ExecuteOptionsBeamer{right}
+\ProcessOptionsBeamer
+
+%%% theme definitions
+\hypersetup
+{
+	unicode,                            % use unicode for bookmark
+	bookmarksdepth=3,                   % bookmark depth (section/subsection/subsubsection}
+	bookmarksnumbered=true,             % enable bookmark numbering
+	bookmarksopen=true,                 % open bookmark
+	colorlinks=true,                    % enable color link
+	linkcolor=beamer@structurecolor,    % set link color
+	urlcolor=beamer@structurecolor,     % set url color
+}
+\renewcommand\uselanguage[1]            % macro to detect language
+{
+	\def\x{#1}
+	\def\englishlanguage{english}
+	\def\vietnameselanguage{vietnamese}
+	\ifx\x\englishlanguage% use english
+		\usepackage[utf8]{inputenc}
+		\def\prefixdate{ on }
+	\else
+		\ifx\x\vietnameselanguage% use vietnamese
+			\usepackage[utf8]{vietnam}
+			\def\prefixdate{. }
+		\else% unknown language - raise error
+			\GenericError
+				{\x}
+				{Undefined "\MessageBreak"}
+				{Only "english" or "vietnamese" allowed.}
+				{Read the inner theme file for explanation.}
+			\def\prefixdate{}
+		\fi
+	\fi
+}
+\renewcommand\subject[1]                % marco to insert subject
+{
+	\def\insertsubject{#1}
+}
+\newcommand\reference[1]                % marco to insert reference
+{
+	\def\beamer@reference{true}
+	\def\insertreference{#1}
+}
+\newcommand\instructor[2]               % marco to insert instructor
+{
+	\def\beamer@instructor{true}
+	\def\insertinstructorname{#1}
+	\def\insertinstructor{#2}
+}
+\newcommand\student[3][]                % marco to insert student
+{
+	\ifx\beamer@instructor\undefined
+		% no instructor - nothing to do
+	\else
+		\ifx\\#1\\
+			% raise error if missing optional argument
+			\GenericError
+				{[•]}
+				{Missing "\MessageBreak" in command \student[•]{•}{•}}
+				{Optional argument must be inserted if instructor inserted.}
+				{Read the inner theme file for explanation.}
+		\fi
+		\def\insertstudentname{#1}
+	\fi
+	\def\insertstudent{#2}
+	\def\insertstudentid{#3}
+}
+\newlength{\positionlength}             % width of position on title page
+\newlength{\namelength}                 % width of name on title page
+\newlength{\idlength}                   % width of student's id on title page
+\AtBeginDocument
+{
+	\counterwithin{table}{section}
+	\counterwithin{figure}{section}
+	\counterwithin{equation}{section}
+	\counterwithin{lstlisting}{section}
+	\counterwithin{footnote}{page}
+	\renewcommand{\thefigure}{{\the\numexpr\value{section}-1}.\arabic{figure}}
+	\renewcommand{\thetable}{{\the\numexpr\value{section}-1}.\arabic{table}}
+	\renewcommand{\theequation}{{\the\numexpr\value{section}-1}.\arabic{equation}}
+	\renewcommand{\thelstlisting}{{\the\numexpr\value{section}-1}.\arabic{lstlisting}}
+	\renewcommand{\thefootnote}{\arabic{footnote}}
+	\renewcommand{\lstlistingname}{Code}
+	\setlength{\namelength}{\widthof{\begin{tabular}{@{}c@{}}\insertstudent\end{tabular}}}
+	\setlength{\idlength}{\widthof{\begin{tabular}{@{}c@{}}\insertstudentid\end{tabular}}+\widthof{ }}
+	\setlength{\positionlength}{\textwidth-\namelength-\idlength}
+}
+\newlength{\BKU@progressonsectionpage}  % width of progress on section page
+\def\beamer@sidebarleft{left}           % used for comparison below
+
+% end of theme options and definitions
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer specific options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mode<presentation>% refers to the first four modes (beamer,handout,second and trans). That is, to all modes except the article mode
+{
+	%% format theme
+	\usefonttheme[only large]{structurebold}
+	\setbeamerfont{block title}{size=\small}
+	\setbeamertemplate{items}[circle]
+	\setbeamertemplate{caption}[numbered]
+	\setbeamertemplate{bibliography item}[text]% use numbers instead of a picture for the references
+	
+	%% set beamer margin
+	\ifx\beamer@sidebarside\beamer@sidebarleft% sidebar on the left
+		\setbeamersize{text margin left=.7cm,text margin right=.5cm}
+	\else% sidebar on the right
+		\setbeamersize{text margin left=.5cm,text margin right=.7cm}
+	\fi
+	\AtBeginDocument{\addtobeamertemplate{frametitle}{}{\vspace{-.9cm}}}
+	
+	%% title page
+	\setbeamertemplate{title page}
+	{
+	% lecture
+		\vbox{}
+		\vskip1em
+		{\LARGE\insertlecture\par}
+	% title
+		\setbeamerfont{title}{series=\bfseries,size=\LARGE}
+		{
+			\usebeamercolor[fg]{title}
+			\usebeamerfont{title}
+			\inserttitle\par
+		}
+	% subtitle
+		\setbeamerfont{subtitle}{size=\normalsize,series=\normalfont}
+		\ifx\insertsubtitle\@empty
+			% do nothing
+	    \else
+			\vskip0.25em
+			{
+				\usebeamerfont{subtitle}
+				\usebeamercolor[fg]{subtitle}
+				\insertsubtitle\par
+			}
+		\fi 
+	% subject and date
+		\vskip1em\par
+		\emph{\insertsubject}\prefixdate\insertdate\par
+	% reference
+		\ifx\beamer@reference\undefined
+			% no reference - do nothing
+		\else
+			\vskip2em\par
+			\begin{footnotesize}
+				(``\insertreference")
+			\end{footnotesize}
+		\fi
+	% instructor
+		\vskip0em plus1filll
+		\ifx\beamer@instructor\undefined
+			% no instructor - do nothing
+		\else
+			\parbox[t]{\positionlength}
+			{
+				\leftskip=0pt plus1fill 
+				\textcolor{beamer@structurecolor}{\insertinstructorname}
+				\vskip5pt
+			}%
+			\parbox[t]{\namelength+\idlength}
+			{
+				\textcolor{beamer@structurecolor}{\insertinstructor}
+				\vskip5pt
+			}
+		\fi
+	% name and id of students
+		\parbox[t]{\positionlength}
+		{
+			\leftskip=0pt plus1fill 
+			\ifx\beamer@instructor\undefined\
+				% no instructor - write nothing
+			\else
+				\textcolor{beamer@structurecolor}{\insertstudentname}
+			\fi
+			\vskip5pt
+		}%
+		\parbox[t]{\namelength}
+		{
+			\ifx\beamer@instructor\undefined
+				\leftskip=0pt plus1fill 
+			\fi
+			\textcolor{beamer@structurecolor}{\insertstudent}
+			\vskip5pt
+		}%
+		\parbox[t]{\idlength}
+		{
+			\leftskip=0pt plus1fill
+			\textcolor{beamer@structurecolor}{\insertstudentid}
+			\vskip5pt
+		}
+	% institute
+		\leftskip=0pt plus1fill
+		\textit{\insertinstitute}
+		\vskip1ex
+	}
+	
+	%% format TOC
+	\setbeamertemplate{sections/subsections in toc}[circle]
+	\setbeamertemplate{subsection in toc}
+	{
+		\leavevmode\leftskip=5.5ex
+		\llap{\raisebox{.2ex}{\textcolor{structure}{$\bullet$}}\hskip1pt}
+		\inserttocsubsection\par
+	}
+	\setbeamertemplate{subsubsection in toc}
+	{
+		\leavevmode\leftskip=9.5ex
+		\llap{\raisebox{.2ex}{\textcolor{structure}{-}}\hskip1pt}
+		\inserttocsubsection\par
+	}
+	
+	%% section page
+	\AtBeginSection[]{\frame{\sectionpage}}% square bracket to remove section page for section*
+	\setbeamertemplate{section page}
+	{
+		\vskip0pt plus1filll
+		\centering
+		\begin{minipage}{.8\textwidth}
+			\usebeamercolor[fg]{section title}
+			\usebeamerfont{section title}
+			\insertsection\\[-1ex]
+			\usebeamertemplate*{progress bar in section page}
+		\end{minipage}%
+		\par\vspace{.475\textheight} 
+	}
+	
+	%% progress bar in section page
+	\setbeamertemplate{progress bar in section page}%
+	{%
+		\setlength{\BKU@progressonsectionpage}%
+		{%
+			\textwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+		}%
+		\begin{tikzpicture}%
+			\draw[fill=beamer@progressbarcolor, draw=beamer@progressbarcolor] (0,.25pt) rectangle (\textwidth, .75pt);%
+			\draw[fill=beamer@headercolor, draw=beamer@headercolor] (0,0) rectangle (\BKU@progressonsectionpage, 1pt);%
+		\end{tikzpicture}%
+	}%
+		
+	%% install animation
+	\ifx\beamer@transparent\undefined
+		% nothing to do
+	\else
+		\setbeamercovered{transparent}
+	\fi
+}
+
+\mode<all>

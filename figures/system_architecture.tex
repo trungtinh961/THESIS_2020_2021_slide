@@ -1,0 +1,36 @@
+\begin{tikzpicture}[thick, scale=.8, every node/.style={scale=0.7}]
+	\definecolor{coloraction}{RGB}{20, 136, 219}
+	\definecolor{colormodule}{RGB}{112, 173, 71}
+	\definecolor{colorsystem}{RGB}{233, 149, 22}
+	
+	% \drawroundedrectangle#x#y#width#height#corner#color#label#format
+	\def\drawroundedrectangle#1#2#3#4#5#6#7#8{
+		\fill[#6, draw=#6, rounded corners=#5cm] (#1, #2) -- ++ (#3, 0) -- ++ (0, #4) -- ++(-#3, 0) -- cycle;
+		\node[#8, align=center] at (#1 + #3 / 2, #2 + #4 / 2) {\sffamily\bfseries\color{white}#7};
+	}
+	
+	
+	% System
+	\drawroundedrectangle{0}{-.25}{14.75}{1}{.125}{colorsystem}{Liver Vessel Segmentation System}{}
+	
+	% Modules
+	\drawroundedrectangle{0}{1}{2.5}{1}{.125}{colormodule}{PreProcessing}{}
+	\drawroundedrectangle{2.75}{1}{2.5}{1}{.125}{colormodule}{Augmentation}{}
+	\drawroundedrectangle{5.5}{1}{2.5}{1}{.125}{colormodule}{Training}{}
+	\drawroundedrectangle{8.25}{1}{3.75}{1}{.125}{colormodule}{PostProcessing}{}
+	\drawroundedrectangle{12.25}{1}{2.5}{1}{.125}{colormodule}{Visualization}{}
+
+	% Actions
+	\drawroundedrectangle{0}{2.25}{1}{4.25}{.125}{coloraction}{Liver Extraction}{rotate=90}
+	\drawroundedrectangle{1.25}{2.25}{1}{4.25}{.125}{coloraction}{Intensity Normalization}{rotate=90}
+	\drawroundedrectangle{2.75}{2.25}{1}{4.25}{.125}{coloraction}{Data Interpolation}{rotate=90}
+	\drawroundedrectangle{4}{2.25}{1}{4.25}{.125}{coloraction}{3D Augmentation}{rotate=90}
+	\drawroundedrectangle{5.5}{2.25}{1}{4.25}{.125}{coloraction}{3D-IRCADb-01\\\sffamily\color{white}(dataset)}{rotate=90}
+	\drawroundedrectangle{6.75}{2.25}{1}{1.5}{.125}{coloraction}{U-Net\\\sffamily\color{white}(model)}{rotate=90}
+	\drawroundedrectangle{6.75}{4}{1}{2.5}{.125}{coloraction}{DeepVesselNet\\\sffamily\color{white}(model)}{rotate=90}
+	\drawroundedrectangle{8.25}{2.25}{1}{4.25}{.125}{coloraction}{Tiny Components Removal}{rotate=90}
+	\drawroundedrectangle{9.5}{2.25}{1}{4.25}{.125}{coloraction}{Centerline Detection}{rotate=90}
+	\drawroundedrectangle{10.75}{2.25}{1}{4.25}{.125}{coloraction}{Bifurcation Detection}{rotate=90}
+	\drawroundedrectangle{12.25}{2.25}{1}{4.25}{.125}{coloraction}{Mesh Extraction\\\sffamily\color{white}(VTK)}{rotate=90}
+	\drawroundedrectangle{13.5}{2.25}{1}{4.25}{.125}{coloraction}{3D Visualization\\\sffamily\color{white}(3D Slicer)}{rotate=90}
+\end{tikzpicture}

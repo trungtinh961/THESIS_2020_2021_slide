@@ -1,0 +1,50 @@
+﻿Hùng-----------------------------------------------------------------
+
+Giới thiệu thành viên, tên đề tài, mục lục.
+Giới thiệu tổng quan đề tài.
+
+Trọng----------------------------------------------------------------
+
+Và trong đề tài này, nhóm chúng em tham khảo hai bài báo, tương ứng với hai mô hình. Đó là mô hình UNet và mô hình DeepVesselNet.
+
+Đối với mô hình UNet, điểm nổi bật của mô hình này mà nhóm chúng em cảm thấy có thể tham khảo được đó chính là kiến trúc hình chữ U, với nhanh bên trái dùng để trích xuất đặc trưng dữ liệu và nhánh bên phải, kết hợp với các skip connection để lấy lại các thông tin về vị trí của đặc trưng, từ đó đưa ra kết quả dự đoán. 
+
+Tuy nhiên, với lí luận, những mạng học sâu sử dụng downsampling, ví dụ như maxpooling trong mô hình UNet, làm mất đi các đặc trưng dữ liệu, Tetteh và cộng sự đã đề xuất ra mô hình DeepVesselNet với kiến trúc của một mạng convolution điển hình nhưng không sử dụng downsampling nhằm giữ lại các đặc trưng của dữ liệu.
+
+Trong các bài toán y khoa, đối tượng được quan tâm, ví dụ như mạch máu, thường chiếm lượng thông tin rất ít. Do đó, việc giải quyết mất cân bằng lớp là điều cần thiết. Cả hai bài báo UNet và DeepVesselNet đều giải quyết mất cân bằng lớp bằng hàm Cross Entropy. Tuy nhiên, hàm Cross Entropy được sử dụng trong bài báo DeepVesselNet có điểm nổi bật hơn với hai thành phần L1 và L2. Trong đó, L1 là hàm Cross Entropy thông thường, được bổ sung thêm các hệ số để cân bằng lại đóng góp của các điểm ảnh foreground và các điểm ảnh background đến giá trị lỗi, còn L2 là lượng phạt bổ sung cho các trường hợp voxel bị dự đoán sai. Một hàm lỗi khác cũng thường được dùng trong các bài toán y khoa, đó là hàm dice. Điểm đặc biệt của hàm này, đó là nó không cần hệ số để cân bằng mà bản thân nó đã tự giải quyết mất cân bằng khi chỉ quan tâm tới các điểm ảnh foreground. Trong các thí nghiệm, hàm lỗi dice cho kết quả rất khả quan.
+Sau khi tìm hiểu các công trình liên quan, nhóm chúng em tiền hành đưa ra các phương án để giải quyết các bài toán đã đặt ra.
+
+Bài toán thứ nhất là phân đoạn mạch máu. Nhóm chúng em sử dụng hai mô hình DeepVesselNet và UNet để thí nghiệm, trong đó, mô hình DeepVesselNet được hiện thực theo mô hình gốc của bài báo, còn mô hình U-Net được điều chỉnh sử dụng convolution 3D thay cho convolution 2D. Trong một số thí nghiệm, nhóm chúng em thêm lớp batchnorm vào hai mô hình để thí nghiệm đánh giá. Hàm lỗi được sử dụng là hàm Cross Entropy và hàm Dice như đã trình bày. Đối với mô hình UNet, khi càng đi xuống sâu, đặc trưng dữ liệu càng mất đi, mà các mạch máu có tiết diện rất nhỏ. Do đó, cần tính toán lại độ sâu của mô hình cho phù hợp. Nhóm chúng em đã tiến hành tìm hiểu thông tin về mạch máu gan, và ghi nhận được rằng, tĩnh mạch cửa là mạch máu có đường kính lớn nhất trong cơ quan gan, có đường kính nằm trong khoảng từ 15 - 18mm, tương ứng với 15 - 18 pixel trên ảnh CT. Bảng 3.1 là bảng kích thước receptive field qua các lớp convolution và maxpooling của mô hình UNet qua các tầng. Từ bảng này, ta thấy kích thước receptive field tại tầng 4 và tầng 5 lớn hơn kích thước của mạch máu rất nhiều lần. Do vậy, nhóm đề xuất sử dụng mô hình UNet với độ sâu là 3.
+
+Hùng-----------------------------------------------------------------
+Giới thiệu tập dữ liệu.
+Trình bày các bước tiền xử lý và hậu xử lý.
+Trình bày bảng phân chia dữ liệu.
+Trọng----------------------------------------------------------------
+
+Nhóm sử dụng hai độ đó để đánh giá các thí nghiệm. Độ đo thứ nhất là IoU. IoU được định nghĩa bằng số lượng phần tử của tập giao giữa tập các điểm ảnh dự đoán là foreground và tập các điểm ảnh foreground trên số lương phần tử của tập hợp giữa hai tập này.
+
+Độ đo thứ hai là Dice. Dice được định nghĩa bằng hai lần số lượng phần tử của tập giao giữa tập các điểm ảnh dự đoán là foreground và tập các điểm ảnh foreground trên tổng số lượng phần tử của hai tập này.
+
+Nhóm đã tiến hành tất cả 10 thí nghiệm. Bảng 4.3 là thông số của 8 thí nghiệm đầu, trong đó, thí nghiệm 1 và thí nghiệm 2 là hai thí nghiệm tham khảo từ hai bài báo gốc, thí nghiệm 3 đến thí nghiệm 8 là các thí nghiệm do nhóm đề xuất sử dụng thêm lớp batchnorm vào mô hình và thay thế hàm cross entropy bằng hàm dice.
+Bảng 4.4 là kết quả của các thí nghiệm tham khảo trên tập kiểm tra trước và sau hậu xử lí. Kết quả các thí nghiệm này cho thấy, mô hình UNet hoạt động hiệu quả hơn mô hình DeepVesselNet. Tuy nhiên, bước hậu xử lí lại không cải thiện được kết quả dự đoán. Điều này có thể được giải thích vì kết quả phân đoạn khá rời rạc, và các điểm ảnh được dự đoán chính xác là mạch máu vô tình bị loại bỏ trong bước hậu xử lí. Do đó, kết quả dự đoán tệ đi.
+
+Bảng 4.5 là kết quả của các thí nghiệm đề xuất trên tập kiểm tra trước và sau hậu xử lí. Cũng như kết quả của các thí nghiệm trước, trong các thí nghiệm này, mô hình UNet cho kết quả tốt hơn so với mô hình DeepVesselNet. Và trong trường hợp này, bước hậu xử lí đã giúp cải thiện kết quả phân đoạn với kết quả tốt nhất ghi nhận được trên tập kiểm tra sau hậu xử lí là 0.4 trên độ đo IoU và 0.569 trên độ đo Dice với mô hình UNet có sử dụng batchnorm với hàm lỗi là dice.
+
+Sau khi tìm được thí nghiệm tốt nhất, nhóm tiến hành thêm ý tưởng của mô hình DenseNet và ResNet vào mô hình với mong muốn cải thiện được kết quả. Tuy nhiên, kết quả thí nghiệm lại cho thấy, việc thêm những ý tưởng này không cải thiện kết quả hơn so với khi không sử dụng.
+
+Sau các thí nghiệm, kết quả tốt nhất nhóm thu được là 0.569 trên độ đo dice. Tuy nhiên đây chỉ là con số mang tính chất định lượng để so sánh các thí nghiệm. Vậy con số 0.569 này có ý nghĩa về mặt trực quan như thế nào? Thì sau đây nhóm xin trình bày phần demo.
+
+Hùng-----------------------------------------------------------------
+
+Tổng kết lại đề tài, nhóm chúng em đã hoàn thành cả ba nhiệm vụ đặt ra. Chúng em đã phân đoạn được hệ thống mạch máu với điểm số Dice là 0.569. Xác định được đường chính giữa bằng phép toàn skeleton và xác định thành công các điểm phân nhánh nhờ đề xuất xem xét các điểm khung xương lân cận.
+
+Trong quá trình thực hiện đề tài, nhóm chúng em cũng gặp phải một số khó khăn và hạn chế. Đầu tiên là bộ dữ liệu quá nhỏ khiến mô hình dễ overfit. Hệ thống của chúng em vẫn dựa trên giả thiết phải có nhãn phân đoạn gan. Và cuối cùng chúng em chưa xây dựng được hệ thống end-to-end.
+
+Về hướng phát triển, chúng em muốn khắc phục những khó khăn và hạn chế gặp phải. Chúng em muốn xây dựng hệ thống phân đoạn trên toàn ảnh CT. Phân đoạn multi-label. Hệ thống có thể đưa ra phác đồ điều trị từ kết quả dự đoán. Và có một giao diện người dùng dễ sử dụng hơn.
+
+Nhìn lại tổng thể đề tài, đến giờ phút này có thể nói chúng em đã hoàn thành các nhiệm vụ đặt ra. Đây là biểu đồ kế hoạch thực hiện luận văn của nhóm chúng em. Chúng em đã cố gắng và không bỏ phí một khoảng thời gian nào. Đó là cơ sở quan trọng để chúng em có được kết quả như ngày hôm nay.
+
+Bài trình bày của nhóm chúng em đến đây là hết. Kính mong các thầy và các bạn có những câu hỏi và góp ý để đề tài của nhóm chúng em được hoàn thiện hơn.
+
+Một lần nữa nhóm chúng em cảm ơn những góp ý của các thầy. Cảm ơn các thầy và các bạn đã chú ý lắng nghe!.
